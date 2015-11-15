@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6070347-80E1-4676-BD08-13F1294BB67D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NeighboursCommunitySystem.Services.Data</RootNamespace>
+    <AssemblyName>NeighboursCommunitySystem.Services.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Services\CommunitiesService.cs" />
+    <Compile Include="Contracts\IInvitationService.cs" />
+    <Compile Include="Contracts\ICommunitiesService.cs" />
+    <Compile Include="Contracts\IProposalService.cs" />
+    <Compile Include="Contracts\IService.cs" />
+    <Compile Include="Contracts\ITaxesService.cs" />
+    <Compile Include="Contracts\IUsersService.cs" />
+    <Compile Include="Services\InvitationService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ProposalService.cs" />
+    <Compile Include="Services\TaxesService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\NeighboursCommunitSystem.Common\NeighboursCommunitySystem.Common.csproj">
+      <Project>{b38013f2-b210-4974-a9e2-0eb4ed75d4be}</Project>
+      <Name>NeighboursCommunitySystem.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\NeighboursCommunitySystem.Data\NeighboursCommunitySystem.Data.csproj">
+      <Project>{47c20bdb-92f3-4b97-8950-e984b5526faa}</Project>
+      <Name>NeighboursCommunitySystem.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\NeighboursCommunitySystem.Models\NeighboursCommunitySystem.Models.csproj">
+      <Project>{189575a1-8aaf-4173-b025-b0016db2fb8a}</Project>
+      <Name>NeighboursCommunitySystem.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Server\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.DtoModels.csproj">
+      <Project>{3a6fb8a8-5870-4ae9-8a03-ae19b9ba8b7f}</Project>
+      <Name>NeighboursCommunitySystem.DtoModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Server\NeighboursCommunitySystem.Server.Common\NeighboursCommunitySystem.Server.Common.csproj">
+      <Project>{af39642d-4c37-49b2-b63d-0fb58d984fb8}</Project>
+      <Name>NeighboursCommunitySystem.Server.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
