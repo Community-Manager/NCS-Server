@@ -1,5 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.API.Hubs
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
@@ -10,7 +11,12 @@
         {
             // It is calling a js function :)
             // Will explain later
-            Clients.All.AddMe();
+            Clients.All.addMe();
+        }
+
+        public override Task OnConnected()
+        {
+            return (base.OnConnected());
         }
     }
 }
