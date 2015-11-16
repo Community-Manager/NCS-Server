@@ -40,8 +40,6 @@
             {
                 Email = invitationData.Email,
                 VerificationToken = invitationData.VerificationToken,
-                DecryptionKey = invitationData.DecryptionKey,
-                InitializationVector = invitationData.InitializationVector,
             };
 
             this.invitations.Add(invitation);
@@ -69,10 +67,7 @@
             }
             else
             {
-                var token = this.DecryptStringFromBytes(
-                    invitation.VerificationToken, 
-                    invitation.DecryptionKey, 
-                    invitation.InitializationVector) + invitationModel.CommunityKey;
+                var token = invitation.VerificationToken;
                 statusDescription = this.SendEmail(invitationModel.Email, token);
             }
 
@@ -141,9 +136,6 @@
                     byte[] encrypted = EncryptStringToBytes(token, rijndael.Key, rijndael.IV);
 
                     invitationData.Email = email;
-                    invitationData.VerificationToken = encrypted;
-                    invitationData.DecryptionKey = rijndael.Key;
-                    invitationData.InitializationVector = rijndael.IV;
                 }
             }
             catch (Exception e)

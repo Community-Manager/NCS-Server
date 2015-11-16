@@ -38,11 +38,13 @@
 
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
-            IRepository<Invitation> invitations)
+            IRepository<Invitation> invitations,
+            IRepository<Community> communities)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
             this.invitations = invitations;
+            this.communities = communities;
         }
 
         public ApplicationUserManager UserManager
