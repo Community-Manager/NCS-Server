@@ -4,12 +4,14 @@ using Breeze.WebApi2;
 
 namespace NeighboursCommunitySystem.API.Controllers
 {
+    using System.Web.Http.Cors;
     using Breeze.ContextProvider.EF6;
     using Data.DbContexts;
     using Models;
     using Services.Data.Contracts;
 
     [BreezeController]
+    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net", headers: "*", methods: "*")]
     public class BreezeController : ApiController
     {
         // Todo: inject via an interface rather than "new" the concrete class
