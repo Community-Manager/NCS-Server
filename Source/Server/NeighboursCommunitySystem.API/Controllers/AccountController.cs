@@ -338,6 +338,7 @@
                 return this.BadRequest(ModelState);
             }
 
+            // Checks if there was an invitation mail sent to the requester's email containing the current verification token.
             var invitation = this.invitations.All()
                 .Where(x => x.VerificationToken == model.VerificationToken)
                 .FirstOrDefault();
