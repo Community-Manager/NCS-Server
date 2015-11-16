@@ -18,11 +18,17 @@
     using Models;
     using Providers;
     using Results;
+    using Data.Repositories;
+    using System.Net;
+    using System.Linq;
 
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        private readonly IRepository<Invitation> invitations;
+        private readonly IRepository<Community> communities;
+
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
@@ -31,10 +37,12 @@
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
+            IRepository<Invitation> invitations)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            this.invitations = invitations;
         }
 
         public ApplicationUserManager UserManager
@@ -325,7 +333,16 @@
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(ModelState);
+            }
+
+            var invitation = this.invitations.All()
+                .Where(x => x.VerificationToken == model.VerificationToken)
+                .FirstOrDefault();
+
+            if (invitation == null)
+            {
+                return this.StatusCode(HttpStatusCode.Forbidden);
             }
 
             var user = new User()
@@ -337,20 +354,20 @@
                 ApartmentNumber = model.ApartmentNumber
             };
 
+            var communityName = invitation.VerificationToken.Substring(40);
+
+            // TODO: Append user to the specified community.
+            var community = this.communities.All()
+                .Where(x => x.Name == communityName)
+                .FirstOrDefault();
+
+            community.Users.Add(user);
+
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
-            }
-
-            if (model.isAdmin)
-            {
-                UserManager.AddToRole(user.Id, "Administrator");
-            }
-            else if (model.isAccountant)
-            {
-                UserManager.AddToRole(user.Id, "Accountant");
             }
 
             return Ok();

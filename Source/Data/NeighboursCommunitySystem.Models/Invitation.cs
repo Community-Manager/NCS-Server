@@ -17,15 +17,8 @@
         public string Email { get; set; }
 
         [Required]
-        [MaxLength(1000)]
-        public byte[] VerificationToken { get; set; }
-
-        [Required]
-        [MaxLength(1000)]
-        public byte[] DecryptionKey { get; set; }
-
-        [Required]
-        [MaxLength(1000)]
-        public byte[] InitializationVector { get; set; }
+        [MaxLength(50, ErrorMessage = "Invalid verification token - length must not be greater than 50 characters.")]
+        [MinLength(47, ErrorMessage = "Invalid verification token - length must not be less than 47 characters.")]
+        public string VerificationToken { get; set; }
     }
 }
