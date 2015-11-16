@@ -1,7 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.DtoModels.Taxes
 {
     using System;
-    using System.Collections.Generic;
     using Models;
     using Server.Common.Mapping;
 

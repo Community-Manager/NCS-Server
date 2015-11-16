@@ -30,13 +30,14 @@ Add **"WORKING"** prefix in front of each point that is currently under construc
 **II. TaxController**
 Working - Under construction
 
- 1. Create Tax by community ID - **(POST) - api/tax/{id}**&nbsp;&nbsp;*Authorization: DbAdmin, Administrator*
- 2. Update Tax by ID - **(PUT) - api/tax/{id}**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin, Administrator*
- 3. Delete Tax by ID - **(DELETE) - api/tax/{id}**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin, Administrator* 
- 4. Get all Taxes - **(GET) - api/tax**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin*
- 5. Get all Taxes by community ID - **(GET) - api/tax/{id}** *Authorization:DbAdmin,Administrator,Accountant*
- 6. Get all Taxes which are available for payment by community ID - **(GET) - api/taxes/available/{id}**
- 7. Get all Taxes which are not-available for payment (their deadline has passed) for current community - **(GET) - api/taxes/expired/{id}**
+ 1. Create Tax - **(POST) - api/tax/**&nbsp;&nbsp;*Authorization: DbAdmin, Administrator*
+ 2. Get Tax by Id - **(GET) - api/tax/{id}** &nbsp;&nbsp;*Authorization: DbAdmin*
+ 3. Update Tax by ID - **(PUT) - api/tax/{id}**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin, Administrator*
+ 4. Delete Tax by ID - **(DELETE) - api/tax/{id}**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin, Administrator* 
+ 5. Get all Taxes - **(GET) - api/tax**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin*
+ 6. Get all Taxes by CommunityId - **(GET) - api/tax/community/{id}***Authorization:DbAdmin,Administrator,Accountant*
+ 7. Get all Taxes which are available for payment by community ID - **(GET) - api/taxes/available/{id}**
+ 8. Get all Taxes which are not-available for payment (their deadline has passed) for current community - **(GET) - api/taxes/expired/{id}**
 
 **III. ProposalController**
 

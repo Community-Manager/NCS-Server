@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proposals\ProposalDataTransferModel.cs" />
     <Compile Include="Taxes\TaxDataTransferModel.cs" />
+    <Compile Include="Taxes\TaxRequestTransferModel.cs" />
     <Compile Include="Users\UserBriefDataTransferModel.cs" />
     <Compile Include="Users\UserDetailedDataTransferModel.cs" />
   </ItemGroup>

@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Services.Data.Contracts;
     using DtoModels.Taxes;
+    using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
     public class TaxesController : ApiController
@@ -23,8 +24,17 @@
             return this.Ok(allTaxes);
         }
 
-        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        [Authorize(Roles = "DbAdmin")]
         public IHttpActionResult Get(int id)
+        {
+            var tax = Mapper.Map<TaxDataTransferModel>(taxes.GetById(id));
+
+            return this.Ok(tax);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        public IHttpActionResult Community(int id)
         {
             var communityTaxes = taxes
                                 .GetByCommunityId(id)
@@ -35,9 +45,9 @@
         }
 
         [Authorize(Roles = "DbAdmin,Administrator")]
-        public IHttpActionResult Post(int id, TaxDataTransferModel model)
+        public IHttpActionResult Post(TaxRequestTransferModel model)
         {
-            int taxId = taxes.AddByCommunityId(id, model);
+            int taxId = taxes.Add(model);
 
             return this.Ok(taxId);
         }
