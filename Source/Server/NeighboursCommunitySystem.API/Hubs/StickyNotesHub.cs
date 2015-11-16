@@ -11,7 +11,7 @@
         {
             // It is calling a js function :)
             // Will explain later
-            Clients.All.addMe();
+            Clients.All.datacontext.getMessageCount();
         }
 
         public override Task OnConnected()
