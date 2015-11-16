@@ -11,7 +11,7 @@ namespace NeighboursCommunitySystem.API.Controllers
     using Services.Data.Contracts;
 
     [BreezeController]
-    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class BreezeController : ApiController
     {
         // Todo: inject via an interface rather than "new" the concrete class
