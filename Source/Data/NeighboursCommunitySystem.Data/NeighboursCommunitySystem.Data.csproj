@@ -58,10 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbContexts\INeighboursCommunityDbContext.cs" />
-    <Compile Include="Migrations\201511161321081_initial.cs" />
-    <Compile Include="Migrations\201511161321081_initial.Designer.cs">
-      <DependentUpon>201511161321081_initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DbContexts\NeighboursCommunityDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,11 +77,6 @@
       <Project>{189575a1-8aaf-4173-b025-b0016db2fb8a}</Project>
       <Name>NeighboursCommunitySystem.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511161321081_initial.resx">
-      <DependentUpon>201511161321081_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
