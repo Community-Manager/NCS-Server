@@ -31,16 +31,22 @@
             return this.Ok(allTaxes);
         }
 
-        [Authorize(Roles = "DbAdmin")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Get(int id)
         {
-            var tax = Mapper.Map<TaxDataTransferModel>(taxes.GetById(id));
+            var tax = taxes.GetById(id);
+            var taxResponse = Mapper.Map<TaxDataTransferModel>(tax);
 
-            return this.Ok(tax);
+            if (!ValidateCurrentUserCommunity(communities.GetById(tax.CommunityId)))
+            {
+                return this.Unauthorized();
+            }
+
+            return this.Ok(taxResponse);
         }
 
         [HttpGet]
-        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Community(int id)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(id)))
@@ -56,7 +62,7 @@
             return this.Ok(communityTaxes);
         }
 
-        [Authorize(Roles = "DbAdmin,Administrator")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(model.CommunityId)))
@@ -74,7 +80,7 @@
             return this.Ok(taxId);
         }
 
-        [Authorize(Roles = "DbAdmin,Administrator")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Delete(int id)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(taxes.GetById(id).CommunityId)))
@@ -87,7 +93,7 @@
             return this.Ok();
         }
 
-        [Authorize(Roles = "DbAdmin,Administrator")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Put(int id, TaxDataTransferModel model)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(taxes.GetById(id).CommunityId)))
@@ -106,7 +112,7 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Available(int id)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(id)))
@@ -124,7 +130,7 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Expired(int id)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(id)))
