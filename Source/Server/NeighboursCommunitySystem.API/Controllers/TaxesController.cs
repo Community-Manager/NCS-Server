@@ -9,8 +9,6 @@
     using System;
     using Microsoft.AspNet.Identity;
     using Models;
-    using Data.Repositories;
-    using Data.DbContexts;
 
     public class TaxesController : ApiController
     {

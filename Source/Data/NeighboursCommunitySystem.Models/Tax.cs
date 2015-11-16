@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Common;
 
     public class Tax
     {
@@ -19,11 +20,11 @@
         public int Id { get; set; }
 
         [Required]
-        [MinLength(1)]
-        [MaxLength(30)]
+        [MinLength(TaxesConstants.TaxesNameLengthMin)]
+        [MaxLength(TaxesConstants.TaxesNameLengthMax)]
         public string Name { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(TaxesConstants.DescriptionLengthMax)]
         public string Description { get; set; }
 
         [Required]
@@ -40,7 +41,7 @@
             {
                 if (value.Date.CompareTo(DateTime.Now.AddDays(1).Date) <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("The deadline must be atleast 24 hours further in the future counting from the current day.");
+                    throw new ArgumentOutOfRangeException(TaxesConstants.DeadLineExceptionMessage);
                 }
 
                 this.deadline = value;
