@@ -8,9 +8,11 @@
     {
         public static void Register(HttpConfiguration config)
         {
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*")
+            config.EnableCors(new EnableCorsAttribute("http://localhost:53074", "*", "*")
             {
-                SupportsCredentials = true
+                SupportsCredentials = true,
+                Headers = { "Access-Control-Allow-Credentials", "Access-Control-Allow-Headers" },
+
             });
 
             // Web API configuration and services
