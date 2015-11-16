@@ -6,6 +6,7 @@
     using DtoModels.Taxes;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using System;
 
     public class TaxesController : ApiController
     {
@@ -66,6 +67,32 @@
             taxes.UpdateById(id, model);
 
             return this.Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        public IHttpActionResult Available(int id)
+        {
+            var availableTaxes = taxes
+                                    .GetByCommunityId(id)
+                                    .Where(t => t.Deadline > DateTime.Now)
+                                    .ProjectTo<TaxDataTransferModel>()
+                                    .ToList();
+
+            return this.Ok(availableTaxes);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "DbAdmin,Administrator,Accountant")]
+        public IHttpActionResult Expired(int id)
+        {
+            var expiredTaxes = taxes
+                                    .GetByCommunityId(id)
+                                    .Where(t => t.Deadline < DateTime.Now)
+                                    .ProjectTo<TaxDataTransferModel>()
+                                    .ToList();
+
+            return this.Ok(expiredTaxes);
         }
     }
 }
