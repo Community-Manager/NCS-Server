@@ -42,7 +42,6 @@
         public string LastName { get; set; }
 
         [Required]
-        [Index(IsUnique = true)]
         public byte ApartmentNumber { get; set; }
         
         public virtual ICollection<Proposal> Proposals
