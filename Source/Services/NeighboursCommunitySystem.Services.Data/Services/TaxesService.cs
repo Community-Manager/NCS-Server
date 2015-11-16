@@ -26,6 +26,18 @@
             taxes.Delete(taxes.GetById(id));
         }
 
+        public void UpdateById(int id, TaxDataTransferModel model)
+        {
+            var tax = this.GetById(id);
+
+            tax.Name = model.Name;
+            tax.Price = model.Price;
+            tax.Description = model.Description;
+            tax.Deadline = model.Deadline;
+
+            taxes.SaveChanges();
+        }
+
         public Tax GetById(int id)
         {
             var tax = taxes.GetById(id);

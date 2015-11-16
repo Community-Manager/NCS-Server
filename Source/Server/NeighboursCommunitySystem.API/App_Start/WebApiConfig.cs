@@ -18,6 +18,18 @@
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                "AvailableTaxes",
+                "api/taxes/available/{id}",
+                new { controller = "Taxes", action = "Available" }
+            );
+
+            config.Routes.MapHttpRoute(
+                "ExpiredTaxes",
+                "api/{controller}/expired/{id}",
+                new { controller = "Taxes", action = "Expired" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { action = RouteParameter.Optional, id = RouteParameter.Optional }

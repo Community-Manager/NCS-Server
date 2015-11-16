@@ -59,5 +59,13 @@
 
             return this.Ok();
         }
+
+        [Authorize(Roles = "DbAdmin,Administrator")]
+        public IHttpActionResult Put(int id, TaxDataTransferModel model)
+        {
+            taxes.UpdateById(id, model);
+
+            return this.Ok();
+        }
     }
 }
