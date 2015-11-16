@@ -4,6 +4,7 @@ namespace NeighboursCommunitySystem.Data.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -18,21 +19,56 @@ namespace NeighboursCommunitySystem.Data.Migrations
 
         protected override void Seed(NeighboursCommunityDbContext context)
         {
-            // Communities
-            var bulgarianCommunity = new Community() { Name = "BGSFSL152", Description = "Bulgaria`s first community group for the people of Sofia, Slatina, block 152, \"Ropotamo\" street." };
-            var frenchCommunity = new Community() { Name = "FRPSCG14", Description = "France`s first community group in Paris, \"Charles de Gaule\", block 14." };
-            var americanCommunity = new Community() { Name = "USNYNY7", Description = "USA`s first community group for the citizens of New York, 7th Skyscrapper." };
+            Community bulgarianCommunity = null;
+            Community frenchCommunity = null;
+            Community americanCommunity = null;
 
-            context.Communities.AddOrUpdate(bulgarianCommunity, frenchCommunity, americanCommunity);
+            if (!context.Communities.Any())
+            {
+                this.SeedCommunities(context, bulgarianCommunity, frenchCommunity, americanCommunity);
+            }
+            else
+            {
+                bulgarianCommunity = context.Communities.Single(x => x.Name == "BGSFSL152");
+                frenchCommunity = context.Communities.Single(x => x.Name == "FRPSCG14");
+                americanCommunity = context.Communities.Single(x => x.Name == "USNYNY7");
+            }
 
-            // Voting options
+            if (!context.VotingOptions.Any())
+            {
+                this.SeedVotingOptions(context);
+            }
+
+            if (!context.Roles.Any())
+            {
+                this.SeedUsersWithRoles(context, bulgarianCommunity, frenchCommunity, americanCommunity);
+            }
+        }
+
+        private void SeedVotingOptions(INeighboursCommunityDbContext context)
+        {
             var optionFor = new VoteOption { Option = Options.For };
             var optionAgainst = new VoteOption { Option = Options.Against };
             var optionAbstention = new VoteOption { Option = Options.Abstention };
 
             context.VotingOptions.AddOrUpdate(optionFor, optionAgainst, optionAbstention);
 
-            // Role manager
+            context.SaveChanges();
+        }
+
+        private void SeedCommunities(INeighboursCommunityDbContext context, Community bulgarianCommunity, Community frenchCommunity, Community americanCommunity)
+        {
+            bulgarianCommunity = new Community() { Name = "BGSFSL152", Description = "Bulgaria`s first community group for the people of Sofia, Slatina, block 152, \"Ropotamo\" street." };
+            frenchCommunity = new Community() { Name = "FRPSCG14", Description = "France`s first community group in Paris, \"Charles de Gaule\", block 14." };
+            americanCommunity = new Community() { Name = "USNYNY7", Description = "USA`s first community group for the citizens of New York, 7th Skyscrapper." };
+
+            context.Communities.AddOrUpdate(bulgarianCommunity, frenchCommunity, americanCommunity);
+
+            context.SaveChanges();
+        }
+
+        private void SeedUsersWithRoles(DbContext context, Community bulgarianCommunity, Community frenchCommunity, Community americanCommunity)
+        {
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
@@ -45,39 +81,101 @@ namespace NeighboursCommunitySystem.Data.Migrations
             roleManager.Create(adminRole);
             roleManager.Create(accountantRole);
 
-            // Admin and accountant for the Bulgarian community.
-            var admin = new User()
+            var bulgarianAdmin = new User()
             {
-                UserName = "archer@gmail.com",
-                Email = "archer@gmail.com",
-                Id = "1",
-                FirstName = "Archer",
-                LastName = "Jr",
+                UserName = "bulgarianAdmin@gmail.com",
+                Email = "bulgarianAdmin@gmail.com",
+                FirstName = "Sevar",
+                LastName = "Georgiev",
                 PhoneNumber = "0887482921",
                 ApartmentNumber = 1
             };
 
-            var accountant = new User()
+            var bulgarianAccountant = new User()
             {
-                UserName = "cyril@gmail.com",
-                Email = "cyril@gmail.com",
-                Id = "2",
-                FirstName = "Cyril",
-                LastName = "Figgis",
+                UserName = "bulgarianAccountant@gmail.com",
+                Email = "bulgarianAccountant@gmail.com",
+                FirstName = "Asparuh",
+                LastName = "Ivanov",
                 PhoneNumber = "0883333312",
                 ApartmentNumber = 2
             };
 
-            // Append roles
-            userManager.Create(admin, "123456");
-            userManager.AddToRole(admin.Id, "Administrator");
+            var frenchAdmin = new User()
+            {
+                UserName = "frenchadmin@gmail.com",
+                Email = "frenchadmin@gmail.com",
+                FirstName = "Contesse",
+                LastName = "Dubois",
+                PhoneNumber = "0887482921",
+                ApartmentNumber = 1
+            };
 
-            userManager.Create(accountant, "123456");
-            userManager.AddToRole(accountant.Id, "Accountant");
+            var frenchAccountant = new User()
+            {
+                UserName = "frenchaccountant@gmail.com",
+                Email = "frenchaccountant@gmail.com",
+                FirstName = "Marseille",
+                LastName = "Dupont",
+                PhoneNumber = "0883333312",
+                ApartmentNumber = 2
+            };
 
-            // Append users to community
-            bulgarianCommunity.Users.Add(admin);
-            bulgarianCommunity.Users.Add(accountant);
+            var americanAdmin = new User()
+            {
+                UserName = "americanadmin@gmail.com",
+                Email = "americanadmin@gmail.com",
+                FirstName = "George",
+                LastName = "Smith",
+                PhoneNumber = "0887482921",
+                ApartmentNumber = 1
+            };
+
+            var americanAccountant = new User()
+            {
+                UserName = "americanAccountant@gmail.com",
+                Email = "americanAccountant@gmail.com",
+                FirstName = "Marvin",
+                LastName = "Gates",
+                PhoneNumber = "0883333312",
+                ApartmentNumber = 2
+            };
+
+            userManager.Create(bulgarianAdmin, "123456");
+            userManager.AddToRole(bulgarianAdmin.Id, "Administrator");
+
+            userManager.Create(bulgarianAccountant, "123456");
+            userManager.AddToRole(bulgarianAccountant.Id, "Accountant");
+
+            userManager.Create(frenchAdmin, "123456");
+            userManager.AddToRole(frenchAdmin.Id, "Administrator");
+
+            userManager.Create(frenchAccountant, "123456");
+            userManager.AddToRole(frenchAccountant.Id, "Accountant");
+
+            userManager.Create(americanAdmin, "123456");
+            userManager.AddToRole(americanAdmin.Id, "Administrator");
+
+            userManager.Create(americanAccountant, "123456");
+            userManager.AddToRole(americanAccountant.Id, "Accountant");
+
+            if (!bulgarianCommunity.Users.Any())
+            {
+                bulgarianCommunity.Users.Add(bulgarianAdmin);
+                bulgarianCommunity.Users.Add(bulgarianAccountant);
+            }
+
+            if (!frenchCommunity.Users.Any())
+            {
+                frenchCommunity.Users.Add(frenchAdmin);
+                frenchCommunity.Users.Add(frenchAccountant);
+            }
+
+            if (!americanCommunity.Users.Any())
+            {
+                americanCommunity.Users.Add(americanAdmin);
+                americanCommunity.Users.Add(americanAccountant);
+            }
 
             context.SaveChanges();
         }

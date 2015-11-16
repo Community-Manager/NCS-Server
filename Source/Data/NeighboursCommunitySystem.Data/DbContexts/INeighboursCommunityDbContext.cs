@@ -12,6 +12,12 @@
 
         IDbSet<Invitation> Invitations { get; set; }
 
+        IDbSet<Community> Communities { get; set; }
+
+        IDbSet<Vote> Votes { get; set; }
+
+        IDbSet<VoteOption> VotingOptions { get; set; }
+
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
