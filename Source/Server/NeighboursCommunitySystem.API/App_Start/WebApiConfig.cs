@@ -1,16 +1,17 @@
 ﻿namespace NeighboursCommunitySystem.API
 {
     using System.Web.Http;
+    using System.Web.Http.Cors;
     using Microsoft.Owin.Security.OAuth;
 
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.EnableCors(new EnableCorsAttribute("*", "*", "*")
-            //{
-            //    SupportsCredentials = true
-            //});
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*")
+            {
+                SupportsCredentials = true
+            });
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
