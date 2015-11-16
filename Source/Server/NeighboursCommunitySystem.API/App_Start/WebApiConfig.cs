@@ -7,10 +7,7 @@
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.EnableCors(new EnableCorsAttribute("*", "*", "*")
-            //{
-            //    SupportsCredentials = true
-            //});
+            config.EnableCors();
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.

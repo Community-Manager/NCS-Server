@@ -1,12 +1,14 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
     using System.Web.Http;
+    using System.Web.Http.Cors;
     using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
     using Data.DbContexts;
     using Services.Data.Contracts;
 
     [BreezeController]
+    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class ProposalsController : ApiController
     {
         private readonly IProposalService proposalService;
