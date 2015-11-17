@@ -1,15 +1,14 @@
 ﻿namespace NeighboursCommunitySystem.DtoModels.Taxes
 {
     using System;
-    using Models;
     using Server.Common.Mapping;
     using System.ComponentModel.DataAnnotations;
+    using Models;
     using Common;
+    using Server.Common.CustomAttributes;
 
     public class TaxDataTransferModel : IMapFrom<Tax>
     {
-        private DateTime deadline;
-
         [Required]
         [MinLength(TaxesConstants.TaxesNameLengthMin, ErrorMessage = TaxesConstants.ShortNameErrorMessage)]
         [MaxLength(TaxesConstants.TaxesNameLengthMax, ErrorMessage = TaxesConstants.LongNameErrorMessage)]
@@ -21,22 +20,8 @@
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
-        public DateTime Deadline
-        {
-            get
-            {
-                return this.deadline;
-            }
-            set
-            {
-                if (value.Date.CompareTo(DateTime.Now.AddDays(1).Date) <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(TaxesConstants.DeadLineExceptionMessage);
-                }
-
-                this.deadline = value;
-            }
-        }
+        [Required]        
+        [ValidDateAttribute(ErrorMessage = TaxesConstants.DeadLineErrorMessage)]
+        public DateTime Deadline { get; set; }
     }
 }

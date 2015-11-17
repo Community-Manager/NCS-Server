@@ -10,6 +10,6 @@
         public const int DescriptionLengthMax = 300;
         public const string LongDescriptionErrorMessage = "Tax description should be no more than 300 characters long.";
 
-        public const string DeadLineExceptionMessage = "The deadline must be atleast 24 hours further in the future counting from the current day.";
+        public const string DeadLineErrorMessage = "The deadline must be at least 24 hours further in the future counting from the current day.";
     }
 }
