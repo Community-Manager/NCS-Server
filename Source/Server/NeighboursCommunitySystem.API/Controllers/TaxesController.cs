@@ -8,26 +8,24 @@
     using AutoMapper.QueryableExtensions;
     using System;
     using Microsoft.AspNet.Identity;
-    using Models;
 
     public class TaxesController : ApiController
     {
         private readonly ITaxesService taxes;
         private readonly ICommunitiesService communities;
-        private readonly string currentUserId;
+        private string currentUserId;
 
         public TaxesController(ITaxesService taxes, ICommunitiesService communities)
         {
             this.taxes = taxes;
             this.communities = communities;
-            this.currentUserId = this.User.Identity.GetUserId();
         }
 
         [Authorize(Roles = "DbAdmin")]
         public IHttpActionResult Get()
         {
             var allTaxes = taxes.All().ProjectTo<TaxDataTransferModel>().ToList();
-            
+
             return this.Ok(allTaxes);
         }
 
@@ -37,7 +35,9 @@
             var tax = taxes.GetById(id);
             var taxResponse = Mapper.Map<TaxDataTransferModel>(tax);
 
-            if (!ValidateCurrentUserCommunity(communities.GetById(tax.CommunityId)))
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(tax.CommunityId))
             {
                 return this.Unauthorized();
             }
@@ -49,7 +49,9 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Community(int id)
         {
-            if (!ValidateCurrentUserCommunity(communities.GetById(id)))
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(id))
             {
                 return this.Unauthorized();
             }
@@ -65,10 +67,12 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {
-            //if (!ValidateCurrentUserCommunity(communities.GetById(model.CommunityId)))
-            //{
-            //    return this.Unauthorized();
-            //}
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(model.CommunityId))
+            {
+                return this.Unauthorized();
+            }
 
             if (!this.ModelState.IsValid)
             {
@@ -83,7 +87,9 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Delete(int id)
         {
-            if (!ValidateCurrentUserCommunity(communities.GetById(taxes.GetById(id).CommunityId)))
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(taxes.GetById(id).CommunityId))
             {
                 return this.Unauthorized();
             }
@@ -96,7 +102,9 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Put(int id, TaxDataTransferModel model)
         {
-            if (!ValidateCurrentUserCommunity(communities.GetById(taxes.GetById(id).CommunityId)))
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(taxes.GetById(id).CommunityId))
             {
                 return this.Unauthorized();
             }
@@ -115,7 +123,9 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Available(int id)
         {
-            if (!ValidateCurrentUserCommunity(communities.GetById(id)))
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(id))
             {
                 return this.Unauthorized();
             }
@@ -133,7 +143,9 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Expired(int id)
         {
-            if (!ValidateCurrentUserCommunity(communities.GetById(id)))
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            if (!ValidateCurrentUserCommunity(id))
             {
                 return this.Unauthorized();
             }
@@ -148,9 +160,12 @@
         }
 
         [NonAction]
-        public bool ValidateCurrentUserCommunity(Community currentCommunity)
+        public bool ValidateCurrentUserCommunity(int communityId)
         {
-            return currentCommunity.Users.Any(u => u.Id == currentUserId);
+            return communities
+                    .All()
+                    .Any(c => c.Id == communityId &&
+                        c.Users.Any(u => u.Id == currentUserId));
         }
     }
 }
