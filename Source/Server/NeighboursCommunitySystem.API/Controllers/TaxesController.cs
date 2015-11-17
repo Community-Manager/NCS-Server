@@ -65,10 +65,10 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {
-            if (!ValidateCurrentUserCommunity(communities.GetById(model.CommunityId)))
-            {
-                return this.Unauthorized();
-            }
+            //if (!ValidateCurrentUserCommunity(communities.GetById(model.CommunityId)))
+            //{
+            //    return this.Unauthorized();
+            //}
 
             if (!this.ModelState.IsValid)
             {
