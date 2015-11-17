@@ -1,7 +1,7 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
     using Models;
-    using DtoModels.Accounts;
+    using Server.DataTransferModels.Accounts;
     using Services.Data.Contracts;
     using System.Data.Entity;
     using System.Linq;

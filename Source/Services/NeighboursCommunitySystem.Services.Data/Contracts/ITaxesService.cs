@@ -1,8 +1,8 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Contracts
 {
     using System.Linq;
-    using DtoModels.Taxes;
     using NeighboursCommunitySystem.Models;
+    using Server.DataTransferModels.Taxes;
 
     public interface ITaxesService : IService
     {

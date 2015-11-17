@@ -1,11 +1,10 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Services
 {
     using System.Linq;
-    using System.Collections.Generic;
     using Contracts;
-    using DtoModels.Taxes;
     using Models;
     using NeighboursCommunitySystem.Data.Repositories;
+    using Server.DataTransferModels.Taxes;
 
     public class TaxesService : ITaxesService
     {

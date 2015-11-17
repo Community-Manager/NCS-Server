@@ -1,10 +1,11 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Taxes
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Taxes
 {
     using System;
     using Models;
     using Server.Common.Mapping;
     using System.ComponentModel.DataAnnotations;
     using Common;
+    using NeighboursCommunitySystem.Common;
 
     public class TaxDataTransferModel : IMapFrom<Tax>
     {

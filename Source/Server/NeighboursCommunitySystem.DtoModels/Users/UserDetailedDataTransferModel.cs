@@ -1,4 +1,4 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Users
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Users
 {
     using Models;
     using System.Collections.Generic;

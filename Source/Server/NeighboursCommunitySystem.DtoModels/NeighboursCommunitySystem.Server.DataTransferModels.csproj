@@ -7,8 +7,8 @@
     <ProjectGuid>{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NeighboursCommunitySystem.DtoModels</RootNamespace>
-    <AssemblyName>NeighboursCommunitySystem.DtoModels</AssemblyName>
+    <RootNamespace>NeighboursCommunitySystem.Server.DataTransferModels</RootNamespace>
+    <AssemblyName>NeighboursCommunitySystem.Server.DataTransferModels</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

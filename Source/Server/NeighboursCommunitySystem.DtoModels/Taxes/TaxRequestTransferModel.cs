@@ -1,4 +1,4 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Taxes
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Taxes
 {
     using System.ComponentModel.DataAnnotations;
 

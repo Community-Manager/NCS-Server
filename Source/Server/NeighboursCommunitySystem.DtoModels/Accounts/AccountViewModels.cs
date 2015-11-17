@@ -1,4 +1,4 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Accounts
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Accounts
 
 {
     using System.Collections.Generic;

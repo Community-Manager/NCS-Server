@@ -1,6 +1,6 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Accounts
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Accounts
 {
-    using Common;
+    using NeighboursCommunitySystem.Common;
     using System.ComponentModel.DataAnnotations;
 
     public class AccountInvitationDataTransferModel

@@ -3,12 +3,13 @@
     using System.Linq;
     using System.Web.Http;
     using Services.Data.Contracts;
-    using DtoModels.Taxes;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using System;
     using Microsoft.AspNet.Identity;
     using Models;
+    using Server.DataTransferModels.Taxes;
+    using Server.Infrastructure.Validation;
 
     public class TaxesController : ApiController
     {
@@ -23,7 +24,7 @@
             this.currentUserId = this.User.Identity.GetUserId();
         }
 
-        [Authorize(Roles = "DbAdmin")]
+        [Authorize]
         public IHttpActionResult Get()
         {
             var allTaxes = taxes.All().ProjectTo<TaxDataTransferModel>().ToList();
@@ -94,6 +95,7 @@
         }
 
         [Authorize(Roles = "Administrator,Accountant")]
+        [ValidateModelAttribute]
         public IHttpActionResult Put(int id, TaxDataTransferModel model)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(taxes.GetById(id).CommunityId)))
@@ -101,18 +103,15 @@
                 return this.Unauthorized();
             }
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest(this.ModelState);
-            }
-
             taxes.UpdateById(id, model);
 
             return this.Ok();
         }
 
+        // Action Filter override Execute
         [HttpGet]
         [Authorize(Roles = "Administrator,Accountant")]
+        [ValidateModelAttribute]
         public IHttpActionResult Available(int id)
         {
             if (!ValidateCurrentUserCommunity(communities.GetById(id)))
@@ -147,6 +146,7 @@
             return this.Ok(expiredTaxes);
         }
 
+        // Extract to Validation Folder in a Validator class.
         [NonAction]
         public bool ValidateCurrentUserCommunity(Community currentCommunity)
         {

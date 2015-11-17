@@ -1,8 +1,8 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Contracts
 {
     using System.Linq;
-    using DtoModels.Accounts;
     using Models;
+    using Server.DataTransferModels.Accounts;
 
     public interface IInvitationService : IService
     {

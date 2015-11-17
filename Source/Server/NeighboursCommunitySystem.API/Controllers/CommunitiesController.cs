@@ -6,9 +6,9 @@
     using System.Web;
     using System.Web.Http;
     using Services.Data.Contracts;
-    using DtoModels.Communities;
     using Models;
     using Common;
+    using Server.DataTransferModels.Communities;
 
     public class CommunitiesController : ApiController
     {
@@ -33,7 +33,7 @@
             return this.Ok(result);
         }
 
-        [Authorize(Roles = "DbAdmin,Administrator")]
+        // api/
         public IHttpActionResult Post(CommunityDataTransferModel model)
         {
             if (!this.ModelState.IsValid)

@@ -13,7 +13,7 @@
     using System.IO;
     using System.Net;
     using Common;
-    using DtoModels.Accounts;
+    using Server.DataTransferModels.Accounts;
 
     public class InvitationService : IInvitationService
     {
