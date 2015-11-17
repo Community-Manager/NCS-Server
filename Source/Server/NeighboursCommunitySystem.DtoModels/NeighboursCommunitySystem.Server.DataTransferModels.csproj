@@ -96,6 +96,10 @@
       <Project>{af39642d-4c37-49b2-b63d-0fb58d984fb8}</Project>
       <Name>NeighboursCommunitySystem.Server.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NeighboursCommunitySystem.Server.Infrastructure\NeighboursCommunitySystem.Server.Infrastructure.csproj">
+      <Project>{59ec2204-bf17-4c91-92fc-7d9bee7cc3b8}</Project>
+      <Name>NeighboursCommunitySystem.Server.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

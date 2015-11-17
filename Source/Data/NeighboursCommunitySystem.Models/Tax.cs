@@ -41,7 +41,7 @@
             {
                 if (value.Date.CompareTo(DateTime.Now.AddDays(1).Date) <= 0)
                 {
-                    throw new ArgumentOutOfRangeException(TaxesConstants.DeadLineExceptionMessage);
+                    throw new ArgumentOutOfRangeException(TaxesConstants.DeadLineErrorMessage);
                 }
 
                 this.deadline = value;
