@@ -11,6 +11,8 @@
 
         Community GetById(int id);
 
-        int Add(string Name, string Description = null);
+        bool HasUser(int communityId, string userId);
+
+        int Add(string name, string description = null);
     }
 }

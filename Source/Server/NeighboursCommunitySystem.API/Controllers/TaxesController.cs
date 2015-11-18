@@ -183,9 +183,7 @@
         [NonAction]
         public bool ValidateCurrentUserCommunity(int communityId)
         {
-            return this.communities
-                .All()
-                .Any(c => c.Id == communityId && c.Users.Any(u => u.Id == currentUserId));
+            return this.communities.HasUser(communityId, currentUserId);
         }
     }
 }
