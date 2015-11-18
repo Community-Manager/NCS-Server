@@ -74,5 +74,12 @@
         {
             throw new NotImplementedException();
         }
+
+        public bool HasUser(int communityId, string userId)
+        {
+            return this.communities
+                .All()
+                .Any(c => c.Id == communityId && c.Users.Any(u => u.Id == userId));
+        }
     }
 }

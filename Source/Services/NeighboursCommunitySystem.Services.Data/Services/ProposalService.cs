@@ -19,10 +19,7 @@
             return this.proposals.All();
         }
 
-
-
-
-        public void VoteUp(int id)
+        public void VoteUp(int id, string userId)
         {
             var proposal = this.proposals.GetById(id);
 
@@ -31,7 +28,8 @@
                 proposal.Votes.Add(new Vote()
                 {
                     OptionId = 1,
-                    UserId = "1"
+                    UserId = userId,
+                    ProposalId = id
                 });
             }
 
@@ -40,7 +38,7 @@
 
         }
 
-        public void VoteDown(int id)
+        public void VoteDown(int id, string userId)
         {
             var proposal = this.proposals.GetById(id);
 

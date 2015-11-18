@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
@@ -27,6 +28,7 @@
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
             User user = await userManager.FindAsync(context.UserName, context.Password);
 
@@ -53,6 +55,8 @@
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
+
+            context.AdditionalResponseParameters.Add("userId", context.Identity.GetUserId());
 
             return Task.FromResult<object>(null);
         }

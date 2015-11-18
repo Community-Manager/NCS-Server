@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F7D59415-B47B-4465-B037-2DF1BF8FFC88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Services.Data", "Services\NeighboursCommunitySystem.Services.Data\NeighboursCommunitySystem.Services.Data.csproj", "{D6070347-80E1-4676-BD08-13F1294BB67D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Server.Common", "Server\NeighboursCommunitySystem.Server.Common\NeighboursCommunitySystem.Server.Common.csproj", "{AF39642D-4C37-49B2-B63D-0FB58D984FB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Server.DataTransferModels", "Server\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.Server.DataTransferModels.csproj", "{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F}"
@@ -26,6 +24,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.API", "Server\NeighboursCommunitySystem.API\NeighboursCommunitySystem.API.csproj", "{593EE4A7-E818-461A-9F23-881ADCE2744E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Server.Infrastructure", "Server\NeighboursCommunitySystem.Server.Infrastructure\NeighboursCommunitySystem.Server.Infrastructure.csproj", "{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC8BE156-16CB-43BD-B99A-96153FB0D082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Api.Tests", "Tests\NeighboursCommunitySystem.Api.Tests\NeighboursCommunitySystem.Api.Tests.csproj", "{BD513D01-7025-4ED5-A275-BDCC2B681276}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Services.Data", "Services\NeighboursCommunitySystem.Services.Data\NeighboursCommunitySystem.Services.Data.csproj", "{D6070347-80E1-4676-BD08-13F1294BB67D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +45,6 @@ Global
 		{47C20BDB-92F3-4B97-8950-E984B5526FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C20BDB-92F3-4B97-8950-E984B5526FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47C20BDB-92F3-4B97-8950-E984B5526FAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6070347-80E1-4676-BD08-13F1294BB67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6070347-80E1-4676-BD08-13F1294BB67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6070347-80E1-4676-BD08-13F1294BB67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6070347-80E1-4676-BD08-13F1294BB67D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF39642D-4C37-49B2-B63D-0FB58D984FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF39642D-4C37-49B2-B63D-0FB58D984FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF39642D-4C37-49B2-B63D-0FB58D984FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +65,14 @@ Global
 		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD513D01-7025-4ED5-A275-BDCC2B681276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD513D01-7025-4ED5-A275-BDCC2B681276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD513D01-7025-4ED5-A275-BDCC2B681276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD513D01-7025-4ED5-A275-BDCC2B681276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6070347-80E1-4676-BD08-13F1294BB67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6070347-80E1-4676-BD08-13F1294BB67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6070347-80E1-4676-BD08-13F1294BB67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6070347-80E1-4676-BD08-13F1294BB67D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,12 +80,13 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{189575A1-8AAF-4173-B025-B0016DB2FB8A} = {8959A6C4-0406-49E4-B1FD-4CFD5FC6FFB3}
 		{47C20BDB-92F3-4B97-8950-E984B5526FAA} = {8959A6C4-0406-49E4-B1FD-4CFD5FC6FFB3}
-		{D6070347-80E1-4676-BD08-13F1294BB67D} = {F7D59415-B47B-4465-B037-2DF1BF8FFC88}
 		{AF39642D-4C37-49B2-B63D-0FB58D984FB8} = {6738DB4D-2691-464B-A360-D1543B117D0D}
 		{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F} = {6738DB4D-2691-464B-A360-D1543B117D0D}
 		{B38013F2-B210-4974-A9E2-0EB4ED75D4BE} = {AE18C304-75B5-4521-9A97-A2972E111703}
 		{593EE4A7-E818-461A-9F23-881ADCE2744E} = {6738DB4D-2691-464B-A360-D1543B117D0D}
 		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8} = {6738DB4D-2691-464B-A360-D1543B117D0D}
+		{BD513D01-7025-4ED5-A275-BDCC2B681276} = {FC8BE156-16CB-43BD-B99A-96153FB0D082}
+		{D6070347-80E1-4676-BD08-13F1294BB67D} = {F7D59415-B47B-4465-B037-2DF1BF8FFC88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45

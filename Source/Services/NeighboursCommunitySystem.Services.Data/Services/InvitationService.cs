@@ -112,5 +112,11 @@
 
             return ((RestResponse)client.Execute(request)).StatusCode;
         }
+
+
+        public IQueryable<Invitation> GetBy(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

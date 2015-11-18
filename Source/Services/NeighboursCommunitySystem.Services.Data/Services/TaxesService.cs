@@ -1,5 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Services
 {
+    using System;
     using System.Linq;
     using Contracts;
     using Models;
@@ -22,7 +23,8 @@
 
         public void DeleteById(int id)
         {
-            taxes.Delete(taxes.GetById(id));
+            taxes.Delete(id);
+            taxes.SaveChanges();
         }
 
         public void UpdateById(int id, TaxDataTransferModel model)
@@ -39,9 +41,7 @@
 
         public Tax GetById(int id)
         {
-            var tax = taxes.GetById(id);
-
-            return tax;
+            return taxes.GetById(id);
         }
 
         public IQueryable<Tax> GetByCommunityId(int id)

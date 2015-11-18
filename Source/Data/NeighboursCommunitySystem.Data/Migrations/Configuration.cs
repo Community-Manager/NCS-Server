@@ -1,12 +1,13 @@
 namespace NeighboursCommunitySystem.Data.Migrations
 {
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
     using DbContexts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+
 
     public sealed class Configuration : DbMigrationsConfiguration<NeighboursCommunityDbContext>
     {
@@ -32,6 +33,7 @@ namespace NeighboursCommunitySystem.Data.Migrations
                 bulgarianCommunity = context.Communities.Single(x => x.Name == "BGSFSL152");
                 frenchCommunity = context.Communities.Single(x => x.Name == "FRPSCG14");
                 americanCommunity = context.Communities.Single(x => x.Name == "USNYNY7");
+
             }
 
             if (!context.VotingOptions.Any())

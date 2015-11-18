@@ -1,31 +1,25 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
     using System.Web.Http.Cors;
-    using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
-    using Services.Data.Contracts;
-    using Models;
     using Common;
     using Server.DataTransferModels.Communities;
     using Data.DbContexts;
     using Server.Infrastructure.Validation;
     using Server.Common.Generators;
     using Server.Common.Constants;
-    using Server.DataTransferModels.Accounts;
     using Microsoft.AspNet.Identity;
     using System.Net.Http;
-    using System.Net;
-    using System.Text;
     using Microsoft.AspNet.Identity.Owin;
+    using Services.Data.Contracts;
+    using Models;
 
     [BreezeController]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
         private readonly ICommunitiesService communities;

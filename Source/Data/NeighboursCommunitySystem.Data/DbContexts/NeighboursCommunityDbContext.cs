@@ -1,7 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.Data.DbContexts
 {
     using System.Data.Entity;
-    using System.Data.Entity.ModelConfiguration.Conventions;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
 
@@ -10,17 +9,10 @@
         public NeighboursCommunityDbContext()
             : base("NeighboursCommunitySystem", throwIfV1Schema: false)
         {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.ProxyCreationEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            // Table names match singular entity names by default (don't pluralize)
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            base.OnModelCreating(modelBuilder);
-        }
 
         public virtual IDbSet<Tax> Taxes { get; set; }
 

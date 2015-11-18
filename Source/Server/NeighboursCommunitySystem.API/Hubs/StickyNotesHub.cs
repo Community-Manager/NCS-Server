@@ -9,13 +9,12 @@
     {
 
 
-        public string AddProposal()
+        public void AddProposal()
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
             context.Clients.All.addMe();
             // It is calling a js function :)
             // Will explain later
-            return "Basi :O";
         }
 
         public override Task OnConnected()

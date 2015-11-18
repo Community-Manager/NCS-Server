@@ -17,5 +17,7 @@
         bool Remove(CommunityDataTransferModel model);
 
         bool RemoveById(int id);
+
+        bool HasUser(int communityId, string userId);
     }
 }

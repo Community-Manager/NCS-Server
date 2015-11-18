@@ -6,10 +6,12 @@
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Microsoft.AspNet.Identity;
-    using Services.Data.Contracts;
     using Server.DataTransferModels.Taxes;
     using Server.Infrastructure.Validation;
+    using ServerConstants = Server.Common.Constants.Constants;
+    using Services.Data.Contracts;
 
+    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class TaxesController : ApiController
     {
         private readonly ITaxesService taxes;
@@ -22,18 +24,25 @@
             this.communities = communities;
         }
 
-        [Authorize]
-        public IHttpActionResult Get()
-        {
-            var allTaxes = taxes.All().ProjectTo<TaxDataTransferModel>().ToList();
-
-            return this.Ok(allTaxes);
-        }
+        // There should be no action to get all taxes for all communities by a logged in user.
+        //
+        //[Authorize]
+        //public IHttpActionResult Get()
+        //{
+        //    var allTaxes = taxes.All().ProjectTo<TaxDataTransferModel>().ToList();
+        //    return this.Ok(allTaxes);
+        //}
 
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Get(int id)
         {
             var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
             var taxResponse = Mapper.Map<TaxDataTransferModel>(tax);
 
             this.currentUserId = this.User.Identity.GetUserId();
@@ -65,8 +74,8 @@
             return this.Ok(communityTaxes);
         }
 
-        [Authorize(Roles = "Administrator,Accountant")]
         [ValidateModel]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {
             this.currentUserId = this.User.Identity.GetUserId();
@@ -81,11 +90,20 @@
             return this.Ok(taxId);
         }
 
+        [HttpDelete]
         [Authorize(Roles = "Administrator,Accountant")]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Remove(int id)
         {
             this.currentUserId = this.User.Identity.GetUserId();
-            var communityId = taxes.GetById(id).CommunityId;
+
+            var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
+            var communityId = taxes.GetById(id).CommunityId; ;
 
             if (!ValidateCurrentUserCommunity(communityId))
             {
@@ -97,13 +115,21 @@
             return this.Ok();
         }
 
-        [Authorize(Roles = "Administrator,Accountant")]
+        [HttpPut]
         [ValidateModel]
-        public IHttpActionResult Put(int id, TaxDataTransferModel model)
+        [Authorize(Roles = "Administrator,Accountant")]
+        public IHttpActionResult Update(int id, TaxDataTransferModel model)
         {
             this.currentUserId = this.User.Identity.GetUserId();
 
-            if (!ValidateCurrentUserCommunity(taxes.GetById(id).CommunityId))
+            var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
+            if (!ValidateCurrentUserCommunity(tax.CommunityId))
             {
                 return this.Unauthorized();
             }
@@ -114,8 +140,8 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator,Accountant")]
         [ValidateModel]
+        [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Available(int id)
         {
             this.currentUserId = this.User.Identity.GetUserId();
@@ -157,9 +183,7 @@
         [NonAction]
         public bool ValidateCurrentUserCommunity(int communityId)
         {
-            return this.communities
-                .All()
-                .Any(c => c.Id == communityId && c.Users.Any(u => u.Id == currentUserId));
+            return this.communities.HasUser(communityId, currentUserId);
         }
     }
 }

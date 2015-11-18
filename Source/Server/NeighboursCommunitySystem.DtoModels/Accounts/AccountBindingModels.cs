@@ -60,6 +60,7 @@
 
         [Required]
         [Display(Name = "Appartament Number")]
+        [Range(1, 250, ErrorMessage = "Apartment number must be between 1 and 250")]
         public byte ApartmentNumber { get; set; }
 
         [Required]
