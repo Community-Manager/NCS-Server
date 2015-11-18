@@ -67,7 +67,7 @@
 
         [Route("Role")]
         [Authorize]
-        public IHttpActionResult GetRole([FromBody]string userId)
+        public IHttpActionResult PostRole(string userId)
         {
             var isAdmin = this.User.IsInRole("Administrator");
             return Ok(isAdmin);

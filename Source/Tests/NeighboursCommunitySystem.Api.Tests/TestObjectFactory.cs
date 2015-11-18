@@ -1,11 +1,9 @@
 ﻿namespace NeighboursCommunitySystem.Api.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Moq;
     using Models;
-    using Server.DataTransferModels.Taxes;
+    using Moq;
     using Services.Data.Contracts;
 
     internal class TestObjectFactory
