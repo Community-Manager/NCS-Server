@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
+    using NeighboursCommunitySystem.Common;
 
     // Models used as parameters to AccountController actions.
 
@@ -64,6 +65,8 @@
         public byte ApartmentNumber { get; set; }
 
         [Required]
+        [MaxLength(50)]
+        [MinLength(47)]
         [Display(Name = "Verification Token")]
         public string VerificationToken { get; set; }
     }

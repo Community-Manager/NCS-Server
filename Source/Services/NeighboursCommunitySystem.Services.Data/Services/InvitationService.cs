@@ -80,7 +80,7 @@
 
         private async Task<HttpStatusCode> SendEmail(string email, string token)
         {
-            var registrationURI = "https://neighbourscommunityclient/register/";
+            var registrationURI = "http://neighbourscommunityclient.azurewebsites.net/#/register";
             var message = String.Format(CommunityConstants.RegistrationInvitationMessage,
                 Environment.NewLine,
                 registrationURI,
