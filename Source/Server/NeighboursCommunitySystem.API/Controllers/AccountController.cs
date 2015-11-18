@@ -64,7 +64,6 @@
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-
         [Route("Role")]
         [Authorize]
         public IHttpActionResult PostRole([FromBody]string userId)
@@ -340,7 +339,6 @@
             return logins;
         }
 
-
         // POST api/Account/Register
         [AllowAnonymous]
         [ValidateModel]
@@ -374,7 +372,7 @@
                 return GetErrorResult(result);
             }
 
-            // TODO: Append user to the specified community.
+            // Append user to the specified community.
             var communityName = invitation.VerificationToken.Substring(40);
 
             this.communities.All()
