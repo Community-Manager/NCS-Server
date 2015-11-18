@@ -5,11 +5,17 @@
     using System.Linq;
     using System.Web;
     using System.Web.Http;
+    using System.Web.Http.Cors;
+    using Breeze.ContextProvider.EF6;
+    using Breeze.WebApi2;
     using Services.Data.Contracts;
     using Models;
     using Common;
     using Server.DataTransferModels.Communities;
+    using Data.DbContexts;
 
+    [BreezeController]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
         private readonly ICommunitiesService communities;
@@ -19,6 +25,8 @@
             this.communities = communities;
         }
 
+        [HttpGet]
+        [EnableBreezeQuery]
         public IHttpActionResult Get()
         {
             var result = communities
