@@ -9,8 +9,8 @@
         public NeighboursCommunityDbContext()
             : base("NeighboursCommunitySystem", throwIfV1Schema: false)
         {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.ProxyCreationEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
         }
 
 
