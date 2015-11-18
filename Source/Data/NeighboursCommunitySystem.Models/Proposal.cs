@@ -20,6 +20,10 @@
         [MaxLength(200)]
         public string Description { get; set; }
 
+        [Required]
+        [MaxLength(120)]
+        public string Title { get; set; }
+
         public int CommunityId { get; set; }
         
         public string AuthorId { get; set; }
