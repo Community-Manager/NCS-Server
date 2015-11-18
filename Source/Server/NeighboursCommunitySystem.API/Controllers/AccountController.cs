@@ -21,6 +21,7 @@
 
     [Authorize]
     [RoutePrefix("api/Account")]
+    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -318,9 +319,11 @@
             return logins;
         }
 
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+        //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)

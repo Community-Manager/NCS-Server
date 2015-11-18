@@ -1,7 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.Data.DbContexts
 {
     using System.Data.Entity;
-    using System.Data.Entity.ModelConfiguration.Conventions;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
 
@@ -17,7 +16,7 @@
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Table names match singular entity names by default (don't pluralize)
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             base.OnModelCreating(modelBuilder);
         }

@@ -245,5 +245,11 @@
 
             return result;
         }
+
+
+        public IQueryable<Invitation> GetBy(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

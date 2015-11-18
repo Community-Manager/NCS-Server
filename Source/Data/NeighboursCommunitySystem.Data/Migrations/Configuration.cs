@@ -1,11 +1,11 @@
 namespace NeighboursCommunitySystem.Data.Migrations
 {
+    using System.Data.Entity.Migrations;
+    using System.Linq;
     using DbContexts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
 
     public sealed class Configuration : DbMigrationsConfiguration<NeighboursCommunityDbContext>
     {
@@ -34,7 +34,7 @@ namespace NeighboursCommunitySystem.Data.Migrations
                     var userStore = new UserStore<User>(context);
                     var userManager = new UserManager<User>(userStore);
 
-                    var adminRole = new IdentityRole {Name = "Administrator"};
+                    var adminRole = new IdentityRole { Name = "Administrator" };
                     roleManager.Create(adminRole);
 
                     var admin = new User()
@@ -62,7 +62,7 @@ namespace NeighboursCommunitySystem.Data.Migrations
                     var userStore = new UserStore<User>(context);
                     var userManager = new UserManager<User>(userStore);
 
-                    var accountantRole = new IdentityRole {Name = "Accountant"};
+                    var accountantRole = new IdentityRole { Name = "Accountant" };
                     roleManager.Create(accountantRole);
 
                     var accountant = new User()
@@ -82,7 +82,7 @@ namespace NeighboursCommunitySystem.Data.Migrations
                     context.SaveChanges();
                 }
 
-                
+
             }
 
             if (!context.VotingOptions.Any())

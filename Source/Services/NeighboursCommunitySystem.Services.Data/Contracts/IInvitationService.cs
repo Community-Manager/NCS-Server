@@ -7,7 +7,8 @@
     public interface IInvitationService : IService
     {
         IQueryable<Invitation> All();
-        IQueryable<Invitation> GetByEmail(string email);
+        IQueryable<Invitation> GetBy
+            (string email);
 
         int Add(Invitation invitationData);
 
