@@ -61,7 +61,7 @@
         public async Task<IHttpActionResult> Post(CommunityWithAdminDataTransferModel model)
         {
             // Check if community with the same name already exists.
-            if (communities.All().Any(c => c.Name == model.CommunityModel.Name))
+            if (this.communities.All().Any(c => c.Name == model.CommunityModel.Name))
             {
                 return this.Ok("Community model with the same name already exists.");
             }
@@ -86,6 +86,9 @@
 
             if (!result.Succeeded)
             {
+                // Delete community from database.
+                this.communities.RemoveById(newCommunityId);
+
                 return this.BadRequest("User creation failed.");
             }
 
