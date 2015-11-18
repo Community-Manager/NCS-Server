@@ -6,14 +6,14 @@
     public class AccountInvitationDataTransferModel
     {
         [Required]
-        [EmailAddress]
-        [MaxLength(CommunityConstants.EmailMaxLength, ErrorMessage = CommunityConstants.EmailValidationLengthErrorMessage)]
-        [MinLength(CommunityConstants.EmailMinLength, ErrorMessage = CommunityConstants.EmailValidationErrorMessage)]
+        [EmailAddress(ErrorMessage = CommunityConstants.EmailValidationErrorMessage)]
+        [MaxLength(CommunityConstants.EmailMaxLength, ErrorMessage = CommunityConstants.EmailValidationMaxLengthErrorMessage)]
+        [MinLength(CommunityConstants.EmailMinLength, ErrorMessage = CommunityConstants.EmailValidationMinLengthErrorMessage)]
         public string Email { get; set; }
 
         [Required]
-        [MaxLength(CommunityConstants.CommunityNameLengthMax, ErrorMessage = CommunityConstants.CommunityKeyMaxLengthErrorMessage)]
-        [MinLength(CommunityConstants.CommunityNameLengthMin, ErrorMessage = CommunityConstants.CommunityKeyMinLengthErrorMessage)]
+        [MaxLength(CommunityConstants.CommunityKeyMaxLength, ErrorMessage = CommunityConstants.CommunityKeyMaxLengthErrorMessage)]
+        [MinLength(CommunityConstants.CommunityKeyMinLength, ErrorMessage = CommunityConstants.CommunityKeyMinLengthErrorMessage)]
         public string CommunityKey { get; set; }
     }
 }

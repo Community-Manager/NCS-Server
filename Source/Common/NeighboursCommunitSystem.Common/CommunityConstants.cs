@@ -2,10 +2,10 @@
 {
     public static class CommunityConstants
     {
-        public const int CommunityNameLengthMin = 3;
-        public const int CommunityNameLengthMax = 30;
-        public const string ShortNameErrorMessage = "Community name length should be equal to or more than 3 characters.";
-        public const string LongNameErrorMessage = "Community name length should be equal to or shorter than 30 characters.";
+        public const int CommunityNameLengthMin = 7;
+        public const int CommunityNameLengthMax = 10;
+        public const string ShortNameErrorMessage = "Community name length should be equal to or more than 7 characters.";
+        public const string LongNameErrorMessage = "Community name length should be equal to or shorter than 10 characters.";
         public const string NewCommunityAuthorizationMessage = "Only administrators can create new communities.";
 
         public const int DescriptionLengthMin = 3;
@@ -24,8 +24,10 @@
         public const int EmailMaxLength = 150;
         public const int EmailMinLength = 3;
 
-        public const string EmailValidationErrorMessage = "Invalid email address";
-        public const string EmailValidationLengthErrorMessage = "Email length cannot exceed 150 characters.";
+        public const string EmailValidationErrorMessage = "Invalid email address.";
+        public const string EmailValidationMaxLengthErrorMessage = "Email length cannot exceed 150 characters.";
+        public const string EmailValidationMinLengthErrorMessage = "Email length cannot be less than 3 characters.";
+
         public const string CommunityKeyMaxLengthErrorMessage = "Community key length cannot be more than 10 characters.";
         public const string CommunityKeyMinLengthErrorMessage = "Community key length cannot be less than 7 characters.";
     }

@@ -15,10 +15,9 @@
         /// <returns>Returns a random string with the required character length.</returns>
         public string GetString(int length)
         {
-            var tokenLength = Generator.Next(length + 1);
-            var result = new char[tokenLength];
+            var result = new char[length];
 
-            for (int i = 0; i < tokenLength; i++)
+            for (int i = 0; i < length; i++)
             {
                 result[i] = Symbols[Generator.Next(0, Symbols.Length - 1)];
             }

@@ -3,6 +3,7 @@
     using System.Linq;
     using Models;
     using Server.DataTransferModels.Accounts;
+    using System.Net;
 
     public interface IInvitationService : IService
     {
@@ -13,6 +14,6 @@
 
         int Remove(string email);
 
-        string SendInvitation(AccountInvitationDataTransferModel invitationModel);
+        HttpStatusCode SendInvitation(AccountInvitationDataTransferModel invitationModel);
     }
 }

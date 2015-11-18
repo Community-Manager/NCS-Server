@@ -21,6 +21,7 @@
     using System.Net;
     using System.Linq;
     using Server.DataTransferModels.Accounts;
+    using Server.Infrastructure.Validation;
 
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -330,6 +331,7 @@
 
         // POST api/Account/Register
         [AllowAnonymous]
+        [ValidateModel]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
