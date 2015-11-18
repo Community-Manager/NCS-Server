@@ -57,6 +57,7 @@
             }
 
             context.AdditionalResponseParameters.Add("userId", context.Identity.GetUserId());
+            context.AdditionalResponseParameters.Add("role", context.Identity.RoleClaimType);
 
             return Task.FromResult<object>(null);
         }
