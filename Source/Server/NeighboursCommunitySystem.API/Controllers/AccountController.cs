@@ -335,11 +335,6 @@
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return this.BadRequest(ModelState);
-            }
-
             // Checks if there was an invitation mail sent to the requester's email containing the current verification token.
             var invitation = this.invitations.All()
                 .Where(x => x.VerificationToken == model.VerificationToken)
@@ -359,21 +354,21 @@
                 ApartmentNumber = model.ApartmentNumber
             };
 
-            var communityName = invitation.VerificationToken.Substring(40);
-
-            // TODO: Append user to the specified community.
-            var community = this.communities.All()
-                .Where(x => x.Name == communityName)
-                .FirstOrDefault();
-
-            community.Users.Add(user);
-
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
+
+            // TODO: Append user to the specified community.
+            var communityName = invitation.VerificationToken.Substring(40);
+
+            this.communities.All()
+                .Where(x => x.Name == communityName)
+                .FirstOrDefault()
+                .Users
+                .Add(user);
 
             return Ok();
         }

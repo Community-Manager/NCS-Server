@@ -2,15 +2,20 @@
 {
     using System.Linq;
     using Models;
+    using Server.DataTransferModels.Communities;
 
     public interface ICommunitiesService : IService
     {
         IQueryable<Community> All();
 
-        IQueryable<Community> ByCurrentUser();
-
         Community GetById(int id);
 
-        int Add(string Name, string Description = null);
+        int Add(CommunityDataTransferModel model);
+
+        int Update(CommunityDataTransferModel model);
+
+        bool Remove(CommunityDataTransferModel model);
+
+        bool RemoveById(int id);
     }
 }

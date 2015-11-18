@@ -2,6 +2,6 @@
 {
     public static class GlobalConstants
     {
-        public const string UniqueNameErrorMessage = "This name is already in use. Choose another.";
+        public const string UniqueNameErrorMessage = "The desired Community name is already in use. Please select a new one.";
     }
 }

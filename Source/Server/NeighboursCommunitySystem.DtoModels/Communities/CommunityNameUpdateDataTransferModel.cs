@@ -3,15 +3,16 @@
     using System.ComponentModel.DataAnnotations;
     using NeighboursCommunitySystem.Common;
 
-    public class CommunityDataTransferModel
+    public class CommunityNameUpdateDataTransferModel
     {
         [Required]
         [MinLength(CommunityConstants.CommunityNameLengthMin, ErrorMessage = CommunityConstants.ShortNameErrorMessage)]
         [MaxLength(CommunityConstants.CommunityNameLengthMax, ErrorMessage = CommunityConstants.LongNameErrorMessage)]
-        public string Name { get; set; }
+        public string CurrentCommunityName { get; set; }
 
-        [MinLength(CommunityConstants.DescriptionLengthMin, ErrorMessage = CommunityConstants.ShortDescriptionErrorMessage)]
-        [MaxLength(CommunityConstants.DescriptionLengthMax, ErrorMessage = CommunityConstants.LongDescriptionErrorMessage)]
-        public string Description { get; set; }
+        [Required]
+        [MinLength(CommunityConstants.CommunityNameLengthMin, ErrorMessage = CommunityConstants.ShortNameErrorMessage)]
+        [MaxLength(CommunityConstants.CommunityNameLengthMax, ErrorMessage = CommunityConstants.LongNameErrorMessage)]
+        public string NewCommunityName { get; set; }
     }
 }

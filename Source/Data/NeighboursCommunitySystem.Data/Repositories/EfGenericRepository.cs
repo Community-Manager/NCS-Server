@@ -110,8 +110,7 @@
             }
             catch (DbEntityValidationException e)
             {
-                var newException = new FormattedDbEntityValidationException(e);
-                throw newException;
+                throw new FormattedDbEntityValidationException(e);
             }
         }
     }

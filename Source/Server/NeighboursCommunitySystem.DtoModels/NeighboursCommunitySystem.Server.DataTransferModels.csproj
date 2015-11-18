@@ -68,6 +68,8 @@
     <Compile Include="Accounts\AccountInvitationDataTransferModel.cs" />
     <Compile Include="Accounts\AccountViewModels.cs" />
     <Compile Include="Communities\CommunityDataTransferModel.cs" />
+    <Compile Include="Communities\CommunityNameUpdateDataTransferModel.cs" />
+    <Compile Include="Communities\CommunityWithAdminDataTransferModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proposals\ProposalDataTransferModel.cs" />
     <Compile Include="Taxes\TaxDataTransferModel.cs" />
