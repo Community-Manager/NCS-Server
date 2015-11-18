@@ -10,7 +10,6 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
-    using System.Web.Http.Cors;
     using Data.Repositories;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -374,14 +373,16 @@
                 return GetErrorResult(result);
             }
 
-            // TODO: Append user to the specified community.
+            // Append user to the specified community.
             var communityName = invitation.VerificationToken.Substring(40);
 
-            this.communities.All()
+            var community = this.communities.All()
                 .Where(x => x.Name == communityName)
-                .FirstOrDefault()
-                .Users
-                .Add(user);
+                .FirstOrDefault();
+
+            community.Users.Add(user);
+
+            this.communities.SaveChanges();
 
             return Ok();
         }

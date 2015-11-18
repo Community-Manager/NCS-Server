@@ -57,7 +57,22 @@
             return this.Ok(result);
         }
 
-        [ValidateModel]
+        [HttpGet]
+        public IHttpActionResult GetById(string userId)
+        {
+            var result = communities.All()
+                .Where(c => c.Users.Select(u => u.Id).Contains(userId))
+                .Select(c => new CommunityDataTransferModel()
+                {
+                    Name = c.Name,
+                    Description = c.Description
+                })
+
+                .ToList();
+
+            return this.Ok(result);
+        }
+
         public async Task<IHttpActionResult> Post(CommunityWithAdminDataTransferModel model)
         {
             // Check if community with the same name already exists.
