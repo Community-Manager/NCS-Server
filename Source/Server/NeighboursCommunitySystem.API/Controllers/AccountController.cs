@@ -64,6 +64,15 @@
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+
+        [Route("Role")]
+        [Authorize]
+        public IHttpActionResult GetRole([FromBody]string userId)
+        {
+            var isAdmin = this.User.IsInRole("Administrator");
+            return Ok(isAdmin);
+        }
+
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]

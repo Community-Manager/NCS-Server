@@ -57,7 +57,6 @@
             }
 
             context.AdditionalResponseParameters.Add("userId", context.Identity.GetUserId());
-            context.AdditionalResponseParameters.Add("role", context.OwinContext.Authentication.User.IsInRole("Administrator"));
 
             return Task.FromResult<object>(null);
         }
