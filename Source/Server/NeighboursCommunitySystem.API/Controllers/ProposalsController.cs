@@ -8,7 +8,7 @@
     using Services.Data.Contracts;
 
     [BreezeController]
-    [Authorize]
+
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class ProposalsController : ApiController
     {
@@ -29,6 +29,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [EnableBreezeQuery]
         public IHttpActionResult Get()
         {
@@ -37,6 +38,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IHttpActionResult VoteUp(int id)
         {
             var userId = this.User.Identity.GetUserId();
@@ -45,6 +47,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IHttpActionResult VoteDown(int id)
         {
             var userId = this.User.Identity.GetUserId();
