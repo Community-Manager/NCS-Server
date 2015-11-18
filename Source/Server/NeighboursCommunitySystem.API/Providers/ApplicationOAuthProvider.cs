@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNet.Identity;
@@ -57,7 +58,7 @@
             }
 
             context.AdditionalResponseParameters.Add("userId", context.Identity.GetUserId());
-            context.AdditionalResponseParameters.Add("role", context.Identity.RoleClaimType);
+            context.AdditionalResponseParameters.Add("role", context.OwinContext.GetUserManager<User>().Roles.FirstOrDefault());
 
             return Task.FromResult<object>(null);
         }
