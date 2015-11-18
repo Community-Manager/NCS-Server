@@ -5,12 +5,14 @@
     using Models;
     using Moq;
     using Services.Data.Contracts;
+    using Server.DataTransferModels.Taxes;
+    using System;
 
     internal class TestObjectFactory
     {
-        public const int validId = 1;
-        public const int validTaxIdInvalidCommunity = 2;
-        public const int invalidId = 3;
+        internal const int validId = 1;
+        internal const int validTaxIdInvalidCommunity = 2;
+        internal const int invalidId = 3;
 
         private static readonly IQueryable<Tax> taxes = new List<Tax>
         {
@@ -30,7 +32,15 @@
             }
         }.AsQueryable();
 
-        public static ITaxesService GetTaxesService()
+        internal static List<Tax> Taxes
+        {
+            get
+            {
+                return taxes.ToList();
+            }
+        }
+
+        internal static ITaxesService GetTaxesService()
         {
             var taxesServices = new Mock<ITaxesService>();
 
@@ -57,7 +67,7 @@
             return taxesServices.Object;
         }
 
-        public static ICommunitiesService GetCommunitiesService()
+        internal static ICommunitiesService GetCommunitiesService()
         {
             var communitiesService = new Mock<ICommunitiesService>();
 
@@ -70,6 +80,39 @@
                 .Returns(false);
 
             return communitiesService.Object;
+        }
+
+        internal static TaxRequestTransferModel GetValidTaxRequestModel()
+        {
+            return new TaxRequestTransferModel
+            {
+                Name = "Valid model",
+                Deadline = DateTime.Now.AddDays(10),
+                Price = 123,
+                CommunityId = validId
+            };
+        }
+
+        internal static TaxRequestTransferModel GetValidTaxRequestModelWithInvalidCommunity()
+        {
+            return new TaxRequestTransferModel
+            {
+                Name = "Valid model",
+                Deadline = DateTime.Now.AddDays(10),
+                Price = 123,
+                CommunityId = invalidId
+            };
+        }
+
+        internal static TaxRequestTransferModel GetInvalidTaxRequestModel()
+        {
+            return new TaxRequestTransferModel
+            {
+                Name = String.Empty,
+                Deadline = DateTime.Now.AddDays(10),
+                Price = 123,
+                CommunityId = validId
+            };
         }
     }
 }

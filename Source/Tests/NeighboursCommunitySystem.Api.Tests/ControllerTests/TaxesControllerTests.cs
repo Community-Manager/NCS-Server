@@ -30,10 +30,26 @@
             MyWebApi
                 .Controller<TaxesController>()
                 .WithResolvedDependencies(this.dependencies)
-                .Calling(c => c.Get(TestObjectFactory.validId))               
+                .Calling(c => c.Get(TestObjectFactory.validId))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<TaxDataTransferModel>();
+                .WithResponseModelOfType<TaxDataTransferModel>()
+                .Passing(t =>
+                {
+                    Assert.AreEqual(TestObjectFactory.Taxes[0].Name, t.Name);
+                    Assert.AreEqual(TestObjectFactory.Taxes[0].Price, t.Price);
+                });
+        }
+
+        [TestMethod]
+        public void GetShouldHaveAuthorizedAttribute()
+        {
+            MyWebApi
+                .Controller<TaxesController>()
+                .WithResolvedDependencies(this.dependencies)
+                .Calling(c => c.Get(TestObjectFactory.validId))
+                .ShouldHave()
+                .ActionAttributes(attr => attr.RestrictingForAuthorizedRequests());
         }
 
         [TestMethod]
@@ -79,6 +95,50 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<List<TaxDataTransferModel>>();
+        }
+
+        [TestMethod]
+        public void GetByCommunityShouldHaveAuthorizedAttribute()
+        {
+            MyWebApi
+                .Controller<TaxesController>()
+                .WithResolvedDependencies(this.dependencies)
+                .Calling(c => c.Community(TestObjectFactory.validId))
+                .ShouldHave()
+                .ActionAttributes(attr => attr.RestrictingForAuthorizedRequests());
+        }
+
+        [TestMethod]
+        public void PostWithValidModelShoudReturnOk()
+        {
+            MyWebApi
+                .Controller<TaxesController>()
+                .WithResolvedDependencies(this.dependencies)
+                .Calling(c => c.Post(TestObjectFactory.GetValidTaxRequestModel()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [TestMethod]
+        public void PostWithInvalidCommunityShoudReturnUnauthorized()
+        {
+            MyWebApi
+                .Controller<TaxesController>()
+                .WithResolvedDependencies(this.dependencies)
+                .Calling(c => c.Post(TestObjectFactory.GetValidTaxRequestModelWithInvalidCommunity()))
+                .ShouldReturn()
+                .Unauthorized();
+        }
+
+        [TestMethod]
+        public void PostShouldHaveAuthorizedAttribute()
+        {
+            MyWebApi
+                .Controller<TaxesController>()
+                .WithResolvedDependencies(this.dependencies)
+                .Calling(c => c.Post(TestObjectFactory.GetValidTaxRequestModel()))
+                .ShouldHave()
+                .ActionAttributes(attr => attr.RestrictingForAuthorizedRequests());
         }
     }
 }

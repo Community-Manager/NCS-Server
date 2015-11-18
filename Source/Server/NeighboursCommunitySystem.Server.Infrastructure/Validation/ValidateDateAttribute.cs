@@ -4,7 +4,7 @@
     using System.Globalization;
     using System.ComponentModel.DataAnnotations;
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = false)]
     public class ValidateDateAttribute : ValidationAttribute
     {        
         public override bool IsValid(object value)
