@@ -13,13 +13,6 @@
             Configuration.LazyLoadingEnabled = false;
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            // Table names match singular entity names by default (don't pluralize)
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            base.OnModelCreating(modelBuilder);
-        }
 
         public virtual IDbSet<Tax> Taxes { get; set; }
 
