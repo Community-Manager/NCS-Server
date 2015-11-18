@@ -8,6 +8,8 @@
 
         public string Description { get; set; }
 
+        public string Title { get; set; }
+
         public ushort Approvals { get; set; }
     }
 }
