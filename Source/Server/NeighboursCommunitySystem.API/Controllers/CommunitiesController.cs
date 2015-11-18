@@ -22,6 +22,7 @@
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
+        // TODO: Remove and Delete methods, Delete will set IsDeleted to True, Remove will remove the data entirely     
         private readonly ICommunitiesService communities;
         private ApplicationUserManager _userManager;
 

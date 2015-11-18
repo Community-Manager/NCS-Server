@@ -31,6 +31,8 @@
         [MaxLength(CommunityConstants.DescriptionLengthMax)]
         public string Description { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public virtual ICollection<User> Users
         {
             get { return this.users; }
