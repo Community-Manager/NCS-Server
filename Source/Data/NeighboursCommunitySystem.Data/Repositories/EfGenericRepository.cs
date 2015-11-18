@@ -4,6 +4,8 @@
     using System.Data.Entity;
     using System.Linq;
     using DbContexts;
+    using System.Data.Entity.Validation;
+    using CustomExceptions;
 
     public class EfGenericRepository<T> : IRepository<T>
         where T : class
@@ -102,7 +104,15 @@
 
         public int SaveChanges()
         {
-            return this.DbContext.SaveChanges();
+            try
+            {
+                return this.DbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                var newException = new FormattedDbEntityValidationException(e);
+                throw newException;
+            }
         }
     }
 }

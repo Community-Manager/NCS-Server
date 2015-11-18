@@ -1,15 +1,14 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
     using System.Web.Http;
-    using Services.Data.Contracts;
-    using DtoModels.Communities;
-    using Models;
+    using Breeze.WebApi2;
     using Common;
+    using Server.DataTransferModels.Communities;
+    using Services.Data.Contracts;
 
+    [BreezeController]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
         private readonly ICommunitiesService communities;
@@ -19,6 +18,8 @@
             this.communities = communities;
         }
 
+        [HttpGet]
+        [EnableBreezeQuery]
         public IHttpActionResult Get()
         {
             var result = communities
@@ -33,14 +34,14 @@
             return this.Ok(result);
         }
 
-        [Authorize(Roles = "DbAdmin,Administrator")]
+        // api/
         public IHttpActionResult Post(CommunityDataTransferModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.BadRequest(this.ModelState);
             }
-            
+
             if (communities.All().Any(c => c.Name == model.Name))
             {
                 return this.BadRequest(GlobalConstants.UniqueNameErrorMessage);

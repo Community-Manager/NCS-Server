@@ -7,8 +7,8 @@
     <ProjectGuid>{B38013F2-B210-4974-A9E2-0EB4ED75D4BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NeighboursCommunitSystem.Common</RootNamespace>
-    <AssemblyName>NeighboursCommunitSystem.Common</AssemblyName>
+    <RootNamespace>NeighboursCommunitySystem.Common</RootNamespace>
+    <AssemblyName>NeighboursCommunitySystem.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,6 +43,7 @@
     <Compile Include="CommunityConstants.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaxesConstants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6738DB4D-2691-464B-A360-D1543B117D0D}"
 EndProject
@@ -17,13 +17,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Server.Common", "Server\NeighboursCommunitySystem.Server.Common\NeighboursCommunitySystem.Server.Common.csproj", "{AF39642D-4C37-49B2-B63D-0FB58D984FB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.DtoModels", "Server\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.DtoModels.csproj", "{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Server.DataTransferModels", "Server\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.Server.DataTransferModels.csproj", "{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{AE18C304-75B5-4521-9A97-A2972E111703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Common", "Common\NeighboursCommunitSystem.Common\NeighboursCommunitySystem.Common.csproj", "{B38013F2-B210-4974-A9E2-0EB4ED75D4BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.API", "Server\NeighboursCommunitySystem.API\NeighboursCommunitySystem.API.csproj", "{593EE4A7-E818-461A-9F23-881ADCE2744E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighboursCommunitySystem.Server.Infrastructure", "Server\NeighboursCommunitySystem.Server.Infrastructure\NeighboursCommunitySystem.Server.Infrastructure.csproj", "{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{593EE4A7-E818-461A-9F23-881ADCE2744E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{593EE4A7-E818-461A-9F23-881ADCE2744E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{593EE4A7-E818-461A-9F23-881ADCE2744E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,5 +77,9 @@ Global
 		{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F} = {6738DB4D-2691-464B-A360-D1543B117D0D}
 		{B38013F2-B210-4974-A9E2-0EB4ED75D4BE} = {AE18C304-75B5-4521-9A97-A2972E111703}
 		{593EE4A7-E818-461A-9F23-881ADCE2744E} = {6738DB4D-2691-464B-A360-D1543B117D0D}
+		{59EC2204-BF17-4C91-92FC-7D9BEE7CC3B8} = {6738DB4D-2691-464B-A360-D1543B117D0D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

@@ -1,8 +1,8 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Contracts
 {
     using System.Linq;
-    using DtoModels.Taxes;
     using NeighboursCommunitySystem.Models;
+    using Server.DataTransferModels.Taxes;
 
     public interface ITaxesService : IService
     {
@@ -10,8 +10,12 @@
 
         IQueryable<Tax> GetByCommunityId(int id);
 
-        int AddByCommunityId(int id, TaxDataTransferModel model);
+        int Add(TaxRequestTransferModel model);
 
-        void DeleteById(int Id);
+        Tax GetById(int id);
+
+        void DeleteById(int id);
+
+        void UpdateById(int id, TaxDataTransferModel model);
     }
 }

@@ -1,5 +1,4 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Proposals
-
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Proposals
 {
     using Models;
 

@@ -9,7 +9,7 @@
         protected void Application_Start()
         {
             DatabaseConfig.Initialize();
-            AutoMapperConfig.RegisterMappings(Assembly.Load("NeighboursCommunitySystem.DtoModels"));
+            AutoMapperConfig.RegisterMappings(Assembly.Load("NeighboursCommunitySystem.Server.DataTransferModels"));
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }

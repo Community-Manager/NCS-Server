@@ -288,9 +288,8 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-
+    <Content Include="Images\Background.jpg" />
     <Content Include="index.html" />
-
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -316,13 +315,17 @@
       <Project>{d6070347-80e1-4676-bd08-13f1294bb67d}</Project>
       <Name>NeighboursCommunitySystem.Services.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.DtoModels.csproj">
+    <ProjectReference Include="..\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.Server.DataTransferModels.csproj">
       <Project>{3a6fb8a8-5870-4ae9-8a03-ae19b9ba8b7f}</Project>
-      <Name>NeighboursCommunitySystem.DtoModels</Name>
+      <Name>NeighboursCommunitySystem.Server.DataTransferModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\NeighboursCommunitySystem.Server.Common\NeighboursCommunitySystem.Server.Common.csproj">
       <Project>{af39642d-4c37-49b2-b63d-0fb58d984fb8}</Project>
       <Name>NeighboursCommunitySystem.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeighboursCommunitySystem.Server.Infrastructure\NeighboursCommunitySystem.Server.Infrastructure.csproj">
+      <Project>{59ec2204-bf17-4c91-92fc-7d9bee7cc3b8}</Project>
+      <Name>NeighboursCommunitySystem.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -331,7 +334,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\NeighboursCommunity.pubxml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

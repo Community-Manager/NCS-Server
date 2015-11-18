@@ -69,9 +69,9 @@
       <Project>{189575a1-8aaf-4173-b025-b0016db2fb8a}</Project>
       <Name>NeighboursCommunitySystem.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Server\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.DtoModels.csproj">
+    <ProjectReference Include="..\..\Server\NeighboursCommunitySystem.DtoModels\NeighboursCommunitySystem.Server.DataTransferModels.csproj">
       <Project>{3a6fb8a8-5870-4ae9-8a03-ae19b9ba8b7f}</Project>
-      <Name>NeighboursCommunitySystem.DtoModels</Name>
+      <Name>NeighboursCommunitySystem.Server.DataTransferModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Server\NeighboursCommunitySystem.Server.Common\NeighboursCommunitySystem.Server.Common.csproj">
       <Project>{af39642d-4c37-49b2-b63d-0fb58d984fb8}</Project>
@@ -79,6 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

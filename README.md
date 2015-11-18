@@ -27,16 +27,17 @@ Add **"WORKING"** prefix in front of each point that is currently under construc
  10. Get all Users that have concrete tax which is not paid **(GET) api/user/taxes-not-paid/{tax-id}**
 (Example: Tax - "Elevator electricity and support" -> Ivan, Gosho, Marto, Mariyan have not paid)
 
-**II. TaxController**
-Working - Under construction
+**II. TaxController - READY**
+*Authorization: Administrator, Accountant*
 
- 1. Create Tax by community ID - **(POST) - api/tax/{id}**&nbsp;&nbsp;*Authorization: DbAdmin, Administrator*
- 2. Update Tax by ID - **(PUT) - api/tax/{id}**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin, Administrator*
- 3. Delete Tax by ID - **(DELETE) - api/tax/{id}**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin, Administrator* 
- 4. Get all Taxes - **(GET) - api/tax**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Authorization: DbAdmin*
- 5. Get all Taxes by community ID - **(GET) - api/tax/{id}** *Authorization:DbAdmin,Administrator,Accountant*
- 6. Get all Taxes which are available for payment by community ID - **(GET) - api/taxes/available/{id}**
- 7. Get all Taxes which are not-available for payment (their deadline has passed) for current community - **(GET) - api/taxes/expired/{id}**
+ 1. Create Tax - **(POST) - api/taxes**
+ 2. Get Tax by Id - **(GET) - api/taxes/get/{id}** 
+ 3. Update Tax by ID - **(PUT) - api/taxes/update/{id}**
+ 4. Delete Tax by ID - **(DELETE) - api/taxes/remove/{id}**
+ 5. Get all Taxes - **(GET) - api/taxes** *Removed- users should not be able to get all taxes in the system*
+ 6. Get all Taxes by CommunityId - **(GET) - api/taxes/community/{id}**
+ 7. Get all Taxes which are available for payment by community ID - **(GET) - api/taxes/available/{id}**
+ 8. Get all Taxes which are not-available for payment (their deadline has passed) for current community - **(GET) - api/taxes/expired/{id}**
 
 **III. ProposalController**
 

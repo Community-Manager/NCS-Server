@@ -12,20 +12,16 @@
         public int ID { get; set; }
 
         [Required]
-        [MaxLength(150, ErrorMessage = CommunityConstants.EmailValidationLengthErrorMessage)]
+        [Index(IsUnique = true)]
         [EmailAddress(ErrorMessage = CommunityConstants.EmailValidationErrorMessage)]
+        [MaxLength(CommunityConstants.EmailMaxLength, ErrorMessage = CommunityConstants.EmailValidationMaxLengthErrorMessage)]
+        [MinLength(CommunityConstants.EmailMinLength, ErrorMessage = CommunityConstants.EmailValidationMinLengthErrorMessage)]
         public string Email { get; set; }
 
         [Required]
-        [MaxLength(1000)]
-        public byte[] VerificationToken { get; set; }
-
-        [Required]
-        [MaxLength(1000)]
-        public byte[] DecryptionKey { get; set; }
-
-        [Required]
-        [MaxLength(1000)]
-        public byte[] InitializationVector { get; set; }
+        [Index(IsUnique = true)]
+        [MaxLength(51, ErrorMessage = "Invalid verification token - length must not be greater than 51 characters.")]
+        [MinLength(46, ErrorMessage = "Invalid verification token - length must not be less than 47 characters.")]
+        public string VerificationToken { get; set; }
     }
 }

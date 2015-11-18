@@ -1,10 +1,11 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Services
 {
+    using System;
     using System.Linq;
     using Contracts;
-    using DtoModels.Taxes;
     using Models;
     using NeighboursCommunitySystem.Data.Repositories;
+    using Server.DataTransferModels.Taxes;
 
     public class TaxesService : ITaxesService
     {
@@ -22,15 +23,33 @@
 
         public void DeleteById(int id)
         {
-            taxes.Delete(taxes.GetById(id));
+            taxes.Delete(id);
+            taxes.SaveChanges();
         }
 
-        public IQueryable<Tax> GetByCommunityId(int Id)
+        public void UpdateById(int id, TaxDataTransferModel model)
         {
-            return taxes.All().Where(t => t.Community.Id == Id);
+            var tax = this.GetById(id);
+
+            tax.Name = model.Name;
+            tax.Price = model.Price;
+            tax.Description = model.Description;
+            tax.Deadline = model.Deadline;
+
+            taxes.SaveChanges();
         }
 
-        public int AddByCommunityId(int communityId, TaxDataTransferModel model)
+        public Tax GetById(int id)
+        {
+            return taxes.GetById(id);
+        }
+
+        public IQueryable<Tax> GetByCommunityId(int id)
+        {
+            return taxes.All().Where(t => t.Community.Id == id);
+        }
+
+        public int Add(TaxRequestTransferModel model)
         {
             var tax = new Tax
             {
@@ -38,7 +57,7 @@
                 Price = model.Price,
                 Deadline = model.Deadline,
                 Description = model.Description,
-                CommunityId = communityId
+                CommunityId = model.CommunityId
             };
 
             taxes.Add(tax);

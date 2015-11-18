@@ -1,8 +1,9 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Contracts
 {
     using System.Linq;
-    using DtoModels.Accounts;
     using Models;
+    using Server.DataTransferModels.Accounts;
+    using System.Net;
 
     public interface IInvitationService : IService
     {
@@ -14,6 +15,6 @@
 
         int Remove(string email);
 
-        string SendInvitation(AccountInvitationDataTransferModel invitationModel);
+        HttpStatusCode SendInvitation(AccountInvitationDataTransferModel invitationModel);
     }
 }

@@ -13,15 +13,17 @@
     using System.IO;
     using System.Net;
     using Common;
-    using DtoModels.Accounts;
+    using Server.DataTransferModels.Accounts;
 
     public class InvitationService : IInvitationService
     {
         private readonly IRepository<Invitation> invitations;
+        private readonly IRepository<Community> communities;
 
-        public InvitationService(IRepository<Invitation> invitations)
+        public InvitationService(IRepository<Invitation> invitations, IRepository<Community> communities)
         {
             this.invitations = invitations;
+            this.communities = communities;
         }
 
         public IQueryable<Invitation> All()
@@ -31,52 +33,51 @@
 
         public IQueryable<Invitation> GetByEmail(string email)
         {
+            // TODO: Implement this shiet.
             throw new NotImplementedException();
         }
 
         public int Add(Invitation invitationData)
         {
-            var invitation = new Invitation()
-            {
-                Email = invitationData.Email,
-                VerificationToken = invitationData.VerificationToken,
-                DecryptionKey = invitationData.DecryptionKey,
-                InitializationVector = invitationData.InitializationVector,
-            };
-
-            this.invitations.Add(invitation);
+            this.invitations.Add(invitationData);
             this.invitations.SaveChanges();
 
-            return invitation.ID;
+            return invitationData.ID;
         }
 
         public int Remove(string email)
         {
+            // TODO: Implement this shiet;
             throw new NotImplementedException();
         }
 
-        public string SendInvitation(AccountInvitationDataTransferModel invitationModel)
+        public HttpStatusCode SendInvitation(AccountInvitationDataTransferModel invitationModel)
         {
-            // Check if there is an invitation sent to this email already.
-            var invitation = this.invitations.All().Where(x => x.Email == invitationModel.Email).FirstOrDefault();
-            var statusDescription = string.Empty;
+            var validCommunity = this.communities.All().Any(x => x.Name == invitationModel.CommunityKey);
 
-            if (invitation == null)
+            if (!validCommunity)
+            {
+                return HttpStatusCode.Conflict;
+            }
+
+            // Checks if there is an invitation sent to this email already.
+            Invitation existingInvitation = this.invitations.All().Where(x => x.Email == invitationModel.Email).FirstOrDefault();
+
+            if (existingInvitation == null)
             {
                 var token = this.GenerateVerificationToken() + invitationModel.CommunityKey;
-                this.InsertInvitationDataInDatabase(invitationModel.Email, token);
-                statusDescription = this.SendEmail(invitationModel.Email, token);
+                var invitation = new Invitation() { Email = invitationModel.Email, VerificationToken = token };
+
+                this.Add(invitation);
+
+                return this.SendEmail(invitationModel.Email, token);
             }
             else
             {
-                var token = this.DecryptStringFromBytes(
-                    invitation.VerificationToken, 
-                    invitation.DecryptionKey, 
-                    invitation.InitializationVector) + invitationModel.CommunityKey;
-                statusDescription = this.SendEmail(invitationModel.Email, token);
-            }
+                var token = existingInvitation.VerificationToken;
 
-            return statusDescription;
+                return this.SendEmail(invitationModel.Email, token);
+            }
         }
 
         private string GenerateVerificationToken()
@@ -88,21 +89,9 @@
             return result;
         }
 
-        private void InsertInvitationDataInDatabase(string email, string token)
+        private HttpStatusCode SendEmail(string email, string token)
         {
-            var encryptedData = this.EncryptToken(email, token);
-
-            if (encryptedData.Email == null)
-            {
-                throw new ArgumentNullException("Encryption not successful.");
-            }
-
-            this.Add(encryptedData);
-        }
-
-        private string SendEmail(string email, string token)
-        {
-            var registrationURI = "https://neighbourscms/register/";
+            var registrationURI = "https://neighbourscommunityclient/register/";
             var message = String.Format(CommunityConstants.RegistrationInvitationMessage,
                 Environment.NewLine,
                 registrationURI,
@@ -121,129 +110,7 @@
             request.AddParameter("text", message);
             request.Method = Method.POST;
 
-            return ((RestResponse)client.Execute(request)).StatusDescription;
-        }
-
-        private Invitation EncryptToken(string email, string token)
-        {
-            var invitationData = new Invitation();
-
-            try
-            {
-                // Create a new instance of the RijndaelManaged class.
-                // This generates a new key and initialization vector (IV).
-                using (RijndaelManaged rijndael = new RijndaelManaged())
-                {
-                    rijndael.GenerateKey();
-                    rijndael.GenerateIV();
-
-                    // Encrypt the string to an array of bytes.
-                    byte[] encrypted = EncryptStringToBytes(token, rijndael.Key, rijndael.IV);
-
-                    invitationData.Email = email;
-                    invitationData.VerificationToken = encrypted;
-                    invitationData.DecryptionKey = rijndael.Key;
-                    invitationData.InitializationVector = rijndael.IV;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("An error occured while encrypting the token: {0}", e.Message);
-            }
-
-            return invitationData;
-        }
-
-        private byte[] EncryptStringToBytes(string token, byte[] Key, byte[] IV)
-        {
-            // Check arguments.
-            if (token == null || token.Length <= 0)
-            {
-                throw new ArgumentNullException("plainText");
-            }
-            if (Key == null || Key.Length <= 0)
-            {
-                throw new ArgumentNullException("Key");
-            }
-            if (IV == null || IV.Length <= 0)
-            {
-                throw new ArgumentNullException("IV");
-            }
-
-            byte[] encrypted;
-
-            // Create a RijndaelManaged object with the specified key and IV.
-            using (RijndaelManaged rijAlg = new RijndaelManaged())
-            {
-                rijAlg.Key = Key;
-                rijAlg.IV = IV;
-
-                // Create a decrytor to perform the stream transform.
-                ICryptoTransform encryptor = rijAlg.CreateEncryptor(rijAlg.Key, rijAlg.IV);
-
-                // Create the streams used for encryption.
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            //Write all data to the stream.
-                            swEncrypt.Write(token);
-                        }
-                        encrypted = msEncrypt.ToArray();
-                    }
-                }
-            }
-
-            // Return the encrypted bytes from the memory stream.
-            return encrypted;
-        }
-
-        private string DecryptStringFromBytes(byte[] tokenCipher, byte[] Key, byte[] IV)
-        {
-            // Check arguments.
-            if (tokenCipher == null || tokenCipher.Length <= 0)
-            {
-                throw new ArgumentNullException("TokenCipher cannot be NULL.");
-            }
-            if (Key == null || Key.Length <= 0)
-            {
-                throw new ArgumentNullException("Key cannot be NULL");
-            }
-            if (IV == null || IV.Length <= 0)
-            {
-                throw new ArgumentNullException("IV");
-            }
-
-            // Declare the string used to hold the decrypted text.
-            string result = null;
-
-            // Create an RijndaelManaged object with the specified key and IV.
-            using (RijndaelManaged rijAlg = new RijndaelManaged())
-            {
-                rijAlg.Key = Key;
-                rijAlg.IV = IV;
-
-                // Create a decrytor to perform the stream transform.
-                ICryptoTransform decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
-
-                // Create the streams used for decryption.
-                using (MemoryStream msDecrypt = new MemoryStream(tokenCipher))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            // Read the decrypted bytes from the decrypting stream
-                            // and place them in a string.
-                            result = srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
-            }
-
-            return result;
+            return ((RestResponse)client.Execute(request)).StatusCode;
         }
 
 

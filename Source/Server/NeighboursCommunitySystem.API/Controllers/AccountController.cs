@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
-    using DtoModels.Accounts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
@@ -18,12 +17,20 @@
     using Models;
     using Providers;
     using Results;
+    using Data.Repositories;
+    using System.Net;
+    using System.Linq;
+    using Server.DataTransferModels.Accounts;
+    using Server.Infrastructure.Validation;
 
     [Authorize]
     [RoutePrefix("api/Account")]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
+        private readonly IRepository<Invitation> invitations;
+        private readonly IRepository<Community> communities;
+
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
@@ -32,10 +39,14 @@
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
+            IRepository<Invitation> invitations,
+            IRepository<Community> communities)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            this.invitations = invitations;
+            this.communities = communities;
         }
 
         public ApplicationUserManager UserManager
@@ -322,13 +333,24 @@
 
         // POST api/Account/Register
         [AllowAnonymous]
+        [ValidateModel]
         [Route("Register")]
         //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(ModelState);
+            }
+
+            // Checks if there was an invitation mail sent to the requester's email containing the current verification token.
+            var invitation = this.invitations.All()
+                .Where(x => x.VerificationToken == model.VerificationToken)
+                .FirstOrDefault();
+
+            if (invitation == null)
+            {
+                return this.StatusCode(HttpStatusCode.Forbidden);
             }
 
             var user = new User()
@@ -340,20 +362,20 @@
                 ApartmentNumber = model.ApartmentNumber
             };
 
+            var communityName = invitation.VerificationToken.Substring(40);
+
+            // TODO: Append user to the specified community.
+            var community = this.communities.All()
+                .Where(x => x.Name == communityName)
+                .FirstOrDefault();
+
+            community.Users.Add(user);
+
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
-            }
-
-            if (model.isAdmin)
-            {
-                UserManager.AddToRole(user.Id, "Administrator");
-            }
-            else if (model.isAccountant)
-            {
-                UserManager.AddToRole(user.Id, "Accountant");
             }
 
             return Ok();

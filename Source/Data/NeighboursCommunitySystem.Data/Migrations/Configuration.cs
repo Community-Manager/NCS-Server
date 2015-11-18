@@ -1,11 +1,13 @@
 namespace NeighboursCommunitySystem.Data.Migrations
 {
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using DbContexts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
+
 
     public sealed class Configuration : DbMigrationsConfiguration<NeighboursCommunityDbContext>
     {
@@ -18,79 +20,166 @@ namespace NeighboursCommunitySystem.Data.Migrations
 
         protected override void Seed(NeighboursCommunityDbContext context)
         {
-            // ADMIN BUTTON -> CONTROL PANNEL
-            if (!context.Users.Any())
+            Community bulgarianCommunity = null;
+            Community frenchCommunity = null;
+            Community americanCommunity = null;
+
+            if (!context.Communities.Any())
             {
-                //TODO: If you entered this if then there are no users. Why the two checks below?
-
-                var adminExists = context.Users.Any(x => x.UserName == "Administrator");
-                var accountantExists = context.Users.Any(x => x.UserName == "Accountant");
-
-                if (!adminExists)
-                {
-                    var roleStore = new RoleStore<IdentityRole>(context);
-                    var roleManager = new RoleManager<IdentityRole>(roleStore);
-
-                    var userStore = new UserStore<User>(context);
-                    var userManager = new UserManager<User>(userStore);
-
-                    var adminRole = new IdentityRole { Name = "Administrator" };
-                    roleManager.Create(adminRole);
-
-                    var admin = new User()
-                    {
-                        UserName = "archer@gmail.com",
-                        Email = "archer@gmail.com",
-                        Id = "1",
-                        FirstName = "Archer",
-                        LastName = "Jr",
-                        PhoneNumber = "0887482921",
-                        ApartmentNumber = 1
-                    };
-
-                    userManager.Create(admin, "123456");
-                    userManager.AddToRole(admin.Id, "Administrator");
-
-                    context.SaveChanges();
-                }
-
-                if (!accountantExists)
-                {
-                    var roleStore = new RoleStore<IdentityRole>(context);
-                    var roleManager = new RoleManager<IdentityRole>(roleStore);
-
-                    var userStore = new UserStore<User>(context);
-                    var userManager = new UserManager<User>(userStore);
-
-                    var accountantRole = new IdentityRole { Name = "Accountant" };
-                    roleManager.Create(accountantRole);
-
-                    var accountant = new User()
-                    {
-                        UserName = "cyril@gmail.com",
-                        Email = "cyril@gmail.com",
-                        Id = "2",
-                        FirstName = "Cyril",
-                        LastName = "Figgis",
-                        PhoneNumber = "0883333312",
-                        ApartmentNumber = 2
-                    };
-
-                    userManager.Create(accountant, "123456");
-                    userManager.AddToRole(accountant.Id, "Accountant");
-
-                    context.SaveChanges();
-                }
-
+                this.SeedCommunities(context, bulgarianCommunity, frenchCommunity, americanCommunity);
+            }
+            else
+            {
+                bulgarianCommunity = context.Communities.Single(x => x.Name == "BGSFSL152");
+                frenchCommunity = context.Communities.Single(x => x.Name == "FRPSCG14");
+                americanCommunity = context.Communities.Single(x => x.Name == "USNYNY7");
 
             }
 
             if (!context.VotingOptions.Any())
             {
-                context.VotingOptions.Add(new VoteOption { Option = Options.For });
-                context.VotingOptions.Add(new VoteOption { Option = Options.Against });
-                context.VotingOptions.Add(new VoteOption { Option = Options.Abstention });
+                this.SeedVotingOptions(context);
             }
+
+            if (!context.Roles.Any())
+            {
+                this.SeedUsersWithRoles(context, bulgarianCommunity, frenchCommunity, americanCommunity);
+            }
+        }
+
+        private void SeedVotingOptions(INeighboursCommunityDbContext context)
+        {
+            var optionFor = new VoteOption { Option = Options.For };
+            var optionAgainst = new VoteOption { Option = Options.Against };
+            var optionAbstention = new VoteOption { Option = Options.Abstention };
+
+            context.VotingOptions.AddOrUpdate(optionFor, optionAgainst, optionAbstention);
+
+            context.SaveChanges();
+        }
+
+        private void SeedCommunities(INeighboursCommunityDbContext context, Community bulgarianCommunity, Community frenchCommunity, Community americanCommunity)
+        {
+            bulgarianCommunity = new Community() { Name = "BGSFSL152", Description = "Bulgaria`s first community group for the people of Sofia, Slatina, block 152, \"Ropotamo\" street." };
+            frenchCommunity = new Community() { Name = "FRPSCG14", Description = "France`s first community group in Paris, \"Charles de Gaule\", block 14." };
+            americanCommunity = new Community() { Name = "USNYNY7", Description = "USA`s first community group for the citizens of New York, 7th Skyscrapper." };
+
+            context.Communities.AddOrUpdate(bulgarianCommunity, frenchCommunity, americanCommunity);
+
+            context.SaveChanges();
+        }
+
+        private void SeedUsersWithRoles(DbContext context, Community bulgarianCommunity, Community frenchCommunity, Community americanCommunity)
+        {
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var userStore = new UserStore<User>(context);
+            var userManager = new UserManager<User>(userStore);
+
+            var adminRole = new IdentityRole { Name = "Administrator" };
+            var accountantRole = new IdentityRole { Name = "Accountant" };
+
+            roleManager.Create(adminRole);
+            roleManager.Create(accountantRole);
+
+            var bulgarianAdmin = new User()
+            {
+                UserName = "bulgarianAdmin@gmail.com",
+                Email = "bulgarianAdmin@gmail.com",
+                FirstName = "Sevar",
+                LastName = "Georgiev",
+                PhoneNumber = "0887482921",
+                ApartmentNumber = 1
+            };
+
+            var bulgarianAccountant = new User()
+            {
+                UserName = "bulgarianAccountant@gmail.com",
+                Email = "bulgarianAccountant@gmail.com",
+                FirstName = "Asparuh",
+                LastName = "Ivanov",
+                PhoneNumber = "0883333312",
+                ApartmentNumber = 2
+            };
+
+            var frenchAdmin = new User()
+            {
+                UserName = "frenchadmin@gmail.com",
+                Email = "frenchadmin@gmail.com",
+                FirstName = "Contesse",
+                LastName = "Dubois",
+                PhoneNumber = "0887482921",
+                ApartmentNumber = 1
+            };
+
+            var frenchAccountant = new User()
+            {
+                UserName = "frenchaccountant@gmail.com",
+                Email = "frenchaccountant@gmail.com",
+                FirstName = "Marseille",
+                LastName = "Dupont",
+                PhoneNumber = "0883333312",
+                ApartmentNumber = 2
+            };
+
+            var americanAdmin = new User()
+            {
+                UserName = "americanadmin@gmail.com",
+                Email = "americanadmin@gmail.com",
+                FirstName = "George",
+                LastName = "Smith",
+                PhoneNumber = "0887482921",
+                ApartmentNumber = 1
+            };
+
+            var americanAccountant = new User()
+            {
+                UserName = "americanAccountant@gmail.com",
+                Email = "americanAccountant@gmail.com",
+                FirstName = "Marvin",
+                LastName = "Gates",
+                PhoneNumber = "0883333312",
+                ApartmentNumber = 2
+            };
+
+            userManager.Create(bulgarianAdmin, "123456");
+            userManager.AddToRole(bulgarianAdmin.Id, "Administrator");
+
+            userManager.Create(bulgarianAccountant, "123456");
+            userManager.AddToRole(bulgarianAccountant.Id, "Accountant");
+
+            userManager.Create(frenchAdmin, "123456");
+            userManager.AddToRole(frenchAdmin.Id, "Administrator");
+
+            userManager.Create(frenchAccountant, "123456");
+            userManager.AddToRole(frenchAccountant.Id, "Accountant");
+
+            userManager.Create(americanAdmin, "123456");
+            userManager.AddToRole(americanAdmin.Id, "Administrator");
+
+            userManager.Create(americanAccountant, "123456");
+            userManager.AddToRole(americanAccountant.Id, "Accountant");
+
+            if (!bulgarianCommunity.Users.Any())
+            {
+                bulgarianCommunity.Users.Add(bulgarianAdmin);
+                bulgarianCommunity.Users.Add(bulgarianAccountant);
+            }
+
+            if (!frenchCommunity.Users.Any())
+            {
+                frenchCommunity.Users.Add(frenchAdmin);
+                frenchCommunity.Users.Add(frenchAccountant);
+            }
+
+            if (!americanCommunity.Users.Any())
+            {
+                americanCommunity.Users.Add(americanAdmin);
+                americanCommunity.Users.Add(americanAccountant);
+            }
+
+            context.SaveChanges();
         }
     }
 }

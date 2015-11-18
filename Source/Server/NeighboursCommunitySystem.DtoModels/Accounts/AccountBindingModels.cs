@@ -1,4 +1,4 @@
-﻿namespace NeighboursCommunitySystem.DtoModels.Accounts
+﻿namespace NeighboursCommunitySystem.Server.DataTransferModels.Accounts
 {
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
@@ -64,12 +64,8 @@
         public byte ApartmentNumber { get; set; }
 
         [Required]
-        [Display(Name = "Administrator Role")]
-        public bool isAdmin { get; set; }
-
-        [Required]
-        [Display(Name = "Accountant Role")]
-        public bool isAccountant { get; set; }
+        [Display(Name = "Verification Token")]
+        public string VerificationToken { get; set; }
     }
 
     public class RegisterExternalBindingModel

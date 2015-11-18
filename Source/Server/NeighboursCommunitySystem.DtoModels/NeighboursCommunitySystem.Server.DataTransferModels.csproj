@@ -7,8 +7,8 @@
     <ProjectGuid>{3A6FB8A8-5870-4AE9-8A03-AE19B9BA8B7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NeighboursCommunitySystem.DtoModels</RootNamespace>
-    <AssemblyName>NeighboursCommunitySystem.DtoModels</AssemblyName>
+    <RootNamespace>NeighboursCommunitySystem.Server.DataTransferModels</RootNamespace>
+    <AssemblyName>NeighboursCommunitySystem.Server.DataTransferModels</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proposals\ProposalDataTransferModel.cs" />
     <Compile Include="Taxes\TaxDataTransferModel.cs" />
+    <Compile Include="Taxes\TaxRequestTransferModel.cs" />
     <Compile Include="Users\UserBriefDataTransferModel.cs" />
     <Compile Include="Users\UserDetailedDataTransferModel.cs" />
   </ItemGroup>
@@ -94,6 +95,10 @@
     <ProjectReference Include="..\NeighboursCommunitySystem.Server.Common\NeighboursCommunitySystem.Server.Common.csproj">
       <Project>{af39642d-4c37-49b2-b63d-0fb58d984fb8}</Project>
       <Name>NeighboursCommunitySystem.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeighboursCommunitySystem.Server.Infrastructure\NeighboursCommunitySystem.Server.Infrastructure.csproj">
+      <Project>{59ec2204-bf17-4c91-92fc-7d9bee7cc3b8}</Project>
+      <Name>NeighboursCommunitySystem.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
