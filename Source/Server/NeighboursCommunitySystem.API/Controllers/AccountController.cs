@@ -2,12 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Security.Claims;
     using System.Security.Cryptography;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
+    using System.Web.Http.Cors;
+    using Data.Repositories;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
@@ -17,15 +21,12 @@
     using Models;
     using Providers;
     using Results;
-    using Data.Repositories;
-    using System.Net;
-    using System.Linq;
     using Server.DataTransferModels.Accounts;
     using Server.Infrastructure.Validation;
 
     [Authorize]
     [RoutePrefix("api/Account")]
-    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private readonly IRepository<Invitation> invitations;

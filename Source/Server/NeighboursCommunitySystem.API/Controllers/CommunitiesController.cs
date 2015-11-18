@@ -2,13 +2,14 @@
 {
     using System.Linq;
     using System.Web.Http;
+    using System.Web.Http.Cors;
     using Breeze.WebApi2;
     using Common;
     using Server.DataTransferModels.Communities;
     using Services.Data.Contracts;
 
     [BreezeController]
-    //[EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
         private readonly ICommunitiesService communities;
