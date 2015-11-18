@@ -26,7 +26,7 @@
 
     [Authorize]
     [RoutePrefix("api/Account")]
-    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private readonly IRepository<Invitation> invitations;
@@ -336,7 +336,7 @@
         [AllowAnonymous]
         [ValidateModel]
         [Route("Register")]
-        [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
+        //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)

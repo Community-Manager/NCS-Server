@@ -3,17 +3,15 @@
     using System;
     using System.Linq;
     using System.Web.Http;
-    using System.Web.Http.Cors;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Microsoft.AspNet.Identity;
-    using Models;
-    using Services.Data.Contracts;
     using Server.DataTransferModels.Taxes;
     using Server.Infrastructure.Validation;
+    using Services.Data.Contracts;
     using ServerConstants = Server.Common.Constants.Constants;
 
-    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class TaxesController : ApiController
     {
         private readonly ITaxesService taxes;

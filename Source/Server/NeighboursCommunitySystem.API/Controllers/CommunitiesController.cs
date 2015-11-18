@@ -9,7 +9,7 @@
     using Services.Data.Contracts;
 
     [BreezeController]
-    [EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
         private readonly ICommunitiesService communities;
