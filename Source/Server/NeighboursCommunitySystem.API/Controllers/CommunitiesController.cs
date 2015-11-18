@@ -22,6 +22,7 @@
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class CommunitiesController : ApiController
     {
+        // TODO: Remove and Delete methods, Delete will set IsDeleted to True, Remove will remove the data entirely     
         private readonly ICommunitiesService communities;
         private ApplicationUserManager _userManager;
 
@@ -66,11 +67,10 @@
                 return this.Ok("Community model with the same name already exists.");
             }
 
-            // Create new community and store it in the database. 
+            // Create new community and send it to the database.
             var newCommunityId = communities.Add(model.CommunityModel);
-            var tokenGenerator = new RandomStringGenerator();
-            var token = tokenGenerator.GetString(Server.Common.Constants.Constants.VerificationTokenLength) + model.CommunityModel.Name;
-
+           
+            // Create user and append Administator role.
             var user = new User()
             {
                 UserName = model.Email,
@@ -80,15 +80,14 @@
                 ApartmentNumber = model.ApartmentNumber
             };
 
-            // Create user and append Administator role.
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             UserManager.AddToRole(user.Id, "Administrator");
 
+            // If administrator with the following credentials cannot be created,
+            // Delete community from the database and return response indicating failure.
             if (!result.Succeeded)
             {
-                // Delete community from database.
                 this.communities.RemoveById(newCommunityId);
-
                 return this.BadRequest("User creation failed.");
             }
 

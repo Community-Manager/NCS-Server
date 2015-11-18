@@ -33,7 +33,6 @@ namespace NeighboursCommunitySystem.Data.Migrations
                 bulgarianCommunity = context.Communities.Single(x => x.Name == "BGSFSL152");
                 frenchCommunity = context.Communities.Single(x => x.Name == "FRPSCG14");
                 americanCommunity = context.Communities.Single(x => x.Name == "USNYNY7");
-
             }
 
             if (!context.VotingOptions.Any())
@@ -78,10 +77,8 @@ namespace NeighboursCommunitySystem.Data.Migrations
             var userManager = new UserManager<User>(userStore);
 
             var adminRole = new IdentityRole { Name = "Administrator" };
-            var accountantRole = new IdentityRole { Name = "Accountant" };
 
             roleManager.Create(adminRole);
-            roleManager.Create(accountantRole);
 
             var bulgarianAdmin = new User()
             {
@@ -91,16 +88,6 @@ namespace NeighboursCommunitySystem.Data.Migrations
                 LastName = "Georgiev",
                 PhoneNumber = "0887482921",
                 ApartmentNumber = 1
-            };
-
-            var bulgarianAccountant = new User()
-            {
-                UserName = "bulgarianAccountant@gmail.com",
-                Email = "bulgarianAccountant@gmail.com",
-                FirstName = "Asparuh",
-                LastName = "Ivanov",
-                PhoneNumber = "0883333312",
-                ApartmentNumber = 2
             };
 
             var frenchAdmin = new User()
@@ -113,16 +100,6 @@ namespace NeighboursCommunitySystem.Data.Migrations
                 ApartmentNumber = 1
             };
 
-            var frenchAccountant = new User()
-            {
-                UserName = "frenchaccountant@gmail.com",
-                Email = "frenchaccountant@gmail.com",
-                FirstName = "Marseille",
-                LastName = "Dupont",
-                PhoneNumber = "0883333312",
-                ApartmentNumber = 2
-            };
-
             var americanAdmin = new User()
             {
                 UserName = "americanadmin@gmail.com",
@@ -133,50 +110,28 @@ namespace NeighboursCommunitySystem.Data.Migrations
                 ApartmentNumber = 1
             };
 
-            var americanAccountant = new User()
-            {
-                UserName = "americanAccountant@gmail.com",
-                Email = "americanAccountant@gmail.com",
-                FirstName = "Marvin",
-                LastName = "Gates",
-                PhoneNumber = "0883333312",
-                ApartmentNumber = 2
-            };
-
             userManager.Create(bulgarianAdmin, "123456");
             userManager.AddToRole(bulgarianAdmin.Id, "Administrator");
-
-            userManager.Create(bulgarianAccountant, "123456");
-            userManager.AddToRole(bulgarianAccountant.Id, "Accountant");
 
             userManager.Create(frenchAdmin, "123456");
             userManager.AddToRole(frenchAdmin.Id, "Administrator");
 
-            userManager.Create(frenchAccountant, "123456");
-            userManager.AddToRole(frenchAccountant.Id, "Accountant");
-
             userManager.Create(americanAdmin, "123456");
             userManager.AddToRole(americanAdmin.Id, "Administrator");
-
-            userManager.Create(americanAccountant, "123456");
-            userManager.AddToRole(americanAccountant.Id, "Accountant");
 
             if (!bulgarianCommunity.Users.Any())
             {
                 bulgarianCommunity.Users.Add(bulgarianAdmin);
-                bulgarianCommunity.Users.Add(bulgarianAccountant);
             }
 
             if (!frenchCommunity.Users.Any())
             {
                 frenchCommunity.Users.Add(frenchAdmin);
-                frenchCommunity.Users.Add(frenchAccountant);
             }
 
             if (!americanCommunity.Users.Any())
             {
                 americanCommunity.Users.Add(americanAdmin);
-                americanCommunity.Users.Add(americanAccountant);
             }
 
             context.SaveChanges();

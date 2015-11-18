@@ -42,7 +42,9 @@
 
         [Required]
         public byte ApartmentNumber { get; set; }
-        
+
+        public bool IsDeleted { get; set; } = false;
+
         public virtual ICollection<Proposal> Proposals
         {
             get { return this.proposals; }

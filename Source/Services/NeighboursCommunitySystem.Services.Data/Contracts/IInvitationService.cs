@@ -4,17 +4,17 @@
     using Models;
     using Server.DataTransferModels.Accounts;
     using System.Net;
+    using System.Threading.Tasks;
 
     public interface IInvitationService : IService
     {
         IQueryable<Invitation> All();
-        IQueryable<Invitation> GetBy
-            (string email);
+        IQueryable<Invitation> GetByEmail(string email);
 
         int Add(Invitation invitationData);
 
         int Remove(string email);
 
-        HttpStatusCode SendInvitation(AccountInvitationDataTransferModel invitationModel);
+        Task<HttpStatusCode> SendInvitation(AccountInvitationDataTransferModel invitationModel);
     }
 }
