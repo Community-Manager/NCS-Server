@@ -31,6 +31,7 @@
     {
         private readonly IRepository<Invitation> invitations;
         private readonly IRepository<Community> communities;
+        private readonly IRepository<User> users;
 
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
@@ -42,12 +43,14 @@
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
             IRepository<Invitation> invitations,
-            IRepository<Community> communities)
+            IRepository<Community> communities,
+            IRepository<User> users)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
             this.invitations = invitations;
             this.communities = communities;
+            this.users = users;
         }
 
         public ApplicationUserManager UserManager
@@ -356,30 +359,43 @@
                 return this.StatusCode(HttpStatusCode.Forbidden);
             }
 
-            var user = new User()
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                ApartmentNumber = model.ApartmentNumber
-            };
+            var user = this.users.All().Where(x => x.Email == model.Email).FirstOrDefault();
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
+            if (user == null)
             {
-                return GetErrorResult(result);
+                user = new User()
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    ApartmentNumber = model.ApartmentNumber
+                };
+
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
             }
 
             // Append user to the specified community.
             var communityName = invitation.VerificationToken.Substring(40);
 
-            this.communities.All()
+            var community = this.communities.All()
                 .Where(x => x.Name == communityName)
-                .FirstOrDefault()
-                .Users
-                .Add(user);
+                .FirstOrDefault();
+
+            var userAlreadyExistsInCommunity = community.Users.Any(x => x.Email == user.Email);
+
+            if(userAlreadyExistsInCommunity)
+            {
+                return this.BadRequest("Username already exists in the selected Community.");
+            }
+
+            community.Users.Add(user);
+            this.communities.SaveChanges();
 
             return Ok();
         }
