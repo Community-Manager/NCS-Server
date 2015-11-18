@@ -349,6 +349,11 @@
         //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+            if (model.VerificationToken == null || model.VerificationToken.Length < 47 || model.VerificationToken.Length > 50)
+            {
+                return this.BadRequest("Invalid request. VerificationToken required for user authentication.");
+            }
+
             // Checks if there was an invitation mail sent to the requester's email containing the current verification token.
             var invitation = this.invitations.All()
                 .Where(x => x.VerificationToken == model.VerificationToken)
@@ -356,7 +361,7 @@
 
             if (invitation == null)
             {
-                return this.StatusCode(HttpStatusCode.Forbidden);
+                return this.BadRequest("Invalid request. You are not allowed to join this community.");
             }
 
             var user = this.users.All().Where(x => x.Email == model.Email).FirstOrDefault();
@@ -389,7 +394,7 @@
 
             var userAlreadyExistsInCommunity = community.Users.Any(x => x.Email == user.Email);
 
-            if(userAlreadyExistsInCommunity)
+            if (userAlreadyExistsInCommunity)
             {
                 return this.BadRequest("Username already exists in the selected Community.");
             }
