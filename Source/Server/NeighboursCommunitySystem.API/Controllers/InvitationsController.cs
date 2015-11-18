@@ -15,7 +15,7 @@
     {
         private readonly IInvitationService invitationService;
 
-        public InvitationsController(IInvitationService invitationService)
+        public InvitationsController(IInvitationService  invitationService)
         {
             this.invitationService = invitationService;
         }

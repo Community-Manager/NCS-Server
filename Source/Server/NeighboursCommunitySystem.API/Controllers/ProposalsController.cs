@@ -1,13 +1,14 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
     using System.Web.Http;
-    using System.Web.Http.Cors;
     using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
     using Data.DbContexts;
+    using Microsoft.AspNet.Identity;
     using Services.Data.Contracts;
 
     [BreezeController]
+    [Authorize]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class ProposalsController : ApiController
     {
@@ -38,14 +39,16 @@
         [HttpPost]
         public IHttpActionResult VoteUp(int id)
         {
-            this.proposalService.VoteUp(id);
+            var userId = this.User.Identity.GetUserId();
+            this.proposalService.VoteUp(id, userId);
             return this.Ok(id);
         }
 
         [HttpPost]
         public IHttpActionResult VoteDown(int id)
         {
-            this.proposalService.VoteDown(id);
+            var userId = this.User.Identity.GetUserId();
+            this.proposalService.VoteDown(id, userId);
             return this.Ok(id);
         }
     }

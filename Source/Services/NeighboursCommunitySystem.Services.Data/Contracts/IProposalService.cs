@@ -6,8 +6,8 @@
     public interface IProposalService : IService
     {
         IQueryable<Proposal> All();
-        void VoteUp(int id);
-        void VoteDown(int id);
+        void VoteUp(int id, string userId);
+        void VoteDown(int id, string userId);
 
     }
 }
