@@ -14,7 +14,7 @@ Add **"WORKING"** prefix in front of each point that is currently under construc
 
 **I. UserController** 
 
- 1. Create User **(POST)** - **api/user**
+ 1. READY! - Register User **(POST)** - **api/account/register** -> RequestBody -> {email, password, confirmPassword, firstName, lastName, appartmentNumber, verificationToken}
  2. Update User by ID - **(PUT)** - **api/user/{id}**
  3. Delete User by ID - **(DELETE)** - **api/user/{id}**
  4. Delete User by Email - **(DELETE) - api/user/{email}**
@@ -52,5 +52,9 @@ Add **"WORKING"** prefix in front of each point that is currently under construc
  9. Get all Proposals which are Pending approval - **(GET) - api/proposal/pending**
 
 **IV. InvitationController**
- 1. Send Invitation - **(POST) - api/invitation** with Body { "email@domain.com" }
- 1. Get Invitation by ID - **(GET) - api/invitation/{id}**
+ 1. READY! - Send Invitation - **(POST) - api/invitation** -> RequestBody { email, communityName }
+ 2. READY! - Get All Invitations - **(GET) - api/invitation**
+
+**V. CommunitiesController**
+ 1. READY! - Get all Communities - **(GET) - api/communities** 
+ 2. READY! - Create new Community with appended administrator - **(POST) - api/communities** -> RequestBody {check **CommunityWithAdminDataTransferModel.cs**}

@@ -48,6 +48,8 @@
             }
         }
 
+        public bool IsDeleted { get; set; } = false;
+
         public int CommunityId { get; set; }
 
         public virtual Community Community { get; set; }

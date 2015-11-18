@@ -28,6 +28,8 @@
 
         public virtual Community Community { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public virtual ICollection<Vote> Votes
         {
             get { return this.votes; }

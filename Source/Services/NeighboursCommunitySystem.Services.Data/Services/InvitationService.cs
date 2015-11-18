@@ -14,6 +14,7 @@
     using System.Net;
     using Common;
     using Server.DataTransferModels.Accounts;
+    using System.Threading.Tasks;
 
     public class InvitationService : IInvitationService
     {
@@ -31,12 +32,6 @@
             return this.invitations.All().AsQueryable();
         }
 
-        public IQueryable<Invitation> GetByEmail(string email)
-        {
-            // TODO: Implement this shiet.
-            throw new NotImplementedException();
-        }
-
         public int Add(Invitation invitationData)
         {
             this.invitations.Add(invitationData);
@@ -45,13 +40,7 @@
             return invitationData.ID;
         }
 
-        public int Remove(string email)
-        {
-            // TODO: Implement this shiet;
-            throw new NotImplementedException();
-        }
-
-        public HttpStatusCode SendInvitation(AccountInvitationDataTransferModel invitationModel)
+        public async Task<HttpStatusCode> SendInvitation(AccountInvitationDataTransferModel invitationModel)
         {
             var validCommunity = this.communities.All().Any(x => x.Name == invitationModel.CommunityKey);
 
@@ -70,13 +59,13 @@
 
                 this.Add(invitation);
 
-                return this.SendEmail(invitationModel.Email, token);
+                return await this.SendEmail(invitationModel.Email, token);
             }
             else
             {
                 var token = existingInvitation.VerificationToken;
 
-                return this.SendEmail(invitationModel.Email, token);
+                return await this.SendEmail(invitationModel.Email, token);
             }
         }
 
@@ -89,9 +78,9 @@
             return result;
         }
 
-        private HttpStatusCode SendEmail(string email, string token)
+        private async Task<HttpStatusCode> SendEmail(string email, string token)
         {
-            var registrationURI = "https://neighbourscommunityclient/register/";
+            var registrationURI = "http://neighbourscommunityclient.azurewebsites.net/#/register";
             var message = String.Format(CommunityConstants.RegistrationInvitationMessage,
                 Environment.NewLine,
                 registrationURI,
@@ -110,12 +99,20 @@
             request.AddParameter("text", message);
             request.Method = Method.POST;
 
-            return ((RestResponse)client.Execute(request)).StatusCode;
+            var result = await client.ExecuteTaskAsync(request);
+
+            return result.StatusCode;
         }
 
-
-        public IQueryable<Invitation> GetBy(string email)
+        public IQueryable<Invitation> GetByEmail(string email)
         {
+            // TODO: Implement this shiet.
+            throw new NotImplementedException();
+        }
+
+        public int Remove(string email)
+        {
+            // TODO: Implement this shiet;
             throw new NotImplementedException();
         }
     }

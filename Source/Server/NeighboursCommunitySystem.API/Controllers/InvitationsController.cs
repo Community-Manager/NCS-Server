@@ -6,7 +6,6 @@
     using Services.Data.Contracts;
     using System.Data.Entity;
     using System.Linq;
-    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Description;
@@ -28,17 +27,12 @@
             return this.Ok(invitations);
         }
 
-        // Route "api/invitations/", METHOD(POST), ContentType:application/json, Body { "email":"email@domain.com", "communityKey" : "BGSFSL164" }
         [HttpPost]
         [ValidateModel]
-        public IHttpActionResult SendInvitation(AccountInvitationDataTransferModel invitationModel)
+        public async Task<IHttpActionResult> SendInvitation(AccountInvitationDataTransferModel invitationModel)
         {
-            if(!ModelState.IsValid)
-            {
-                return this.StatusCode(HttpStatusCode.NotAcceptable);
-            }
+            var result = await this.invitationService.SendInvitation(invitationModel);
 
-            var result = this.invitationService.SendInvitation(invitationModel);
             return this.StatusCode(result);
         }
     }
