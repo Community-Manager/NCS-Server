@@ -1,9 +1,7 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Services
 {
-    using System;
     using System.Linq;
     using Contracts;
-    using System.Data.Entity.Migrations;
     using Models;
     using NeighboursCommunitySystem.Data.Repositories;
     using Server.DataTransferModels.Taxes;
@@ -93,7 +91,7 @@
                     AmountPaid = amount
                 });
             }
-
+            
             taxes.SaveChanges();
         }
     }

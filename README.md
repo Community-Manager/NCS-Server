@@ -30,15 +30,17 @@ Add **"WORKING"** prefix in front of each point that is currently under construc
 **II. TaxController - READY**
 *Authorization: Administrator, Accountant*
 
- 1. Create Tax - **(POST) - api/taxes**
+ 1. Create Tax - **(POST) - api/taxes** -> RequestBody *TaxRequestTransferMode.cs*
  2. Get Tax by Id - **(GET) - api/taxes/get/{id}** 
- 3. Update Tax by ID - **(PUT) - api/taxes/update/{id}**
+ 3. Update Tax by ID - **(PUT) - api/taxes/update/{id}** -> RequestBody *TaxDataTransferMode.cs*
  4. Delete Tax by ID - **(DELETE) - api/taxes/delete/{id}** *marks as deleted*
  5. Remove Tax by ID - **(DELETE) - api/taxes/remove/{id}** *removes entity from DB*
  6. Get all Taxes - **(GET) - api/taxes** *Removed- users should not be able to get all taxes in the system*
  7. Get all Taxes by CommunityId - **(GET) - api/taxes/community/{id}**
  8. Get all Taxes which are available for payment by community ID - **(GET) - api/taxes/available/{id}**
  9. Get all Taxes which are not-available for payment (their deadline has passed) for current community - **(GET) - api/taxes/expired/{id}**
+ 10. Create payment for a tax or update if same user has already paid - ** (POST) - api/taxes/addpayment/{id}**
+ 	-> RequestBody *TaxPaymentRequestModel.cs*
 
 **III. ProposalController**
 
