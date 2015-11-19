@@ -32,7 +32,7 @@
 
         public virtual Community Community { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; }
 
         public virtual ICollection<Vote> Votes
         {

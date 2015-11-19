@@ -9,6 +9,7 @@
     using Server.DataTransferModels.Proposals;
     using Services.Data.Contracts;
 
+
     [BreezeController]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
     public class ProposalsController : ApiController
@@ -19,9 +20,10 @@
         private readonly EFContextProvider<NeighboursCommunityDbContext> contextProvider =
             new EFContextProvider<NeighboursCommunityDbContext>();
 
-        public ProposalsController(IProposalService proposalService)
+        public ProposalsController(IProposalService proposalService, IMappingService mappingService)
         {
             this.proposalService = proposalService;
+            this.mappingService = mappingService;
         }
 
         [HttpGet]

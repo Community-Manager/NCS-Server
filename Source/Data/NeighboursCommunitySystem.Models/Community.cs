@@ -1,9 +1,9 @@
 ﻿namespace NeighboursCommunitySystem.Models
 {
-    using Common;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Common;
 
 
     public class Community
@@ -30,8 +30,6 @@
         [MinLength(CommunityConstants.DescriptionLengthMin)]
         [MaxLength(CommunityConstants.DescriptionLengthMax)]
         public string Description { get; set; }
-
-        public bool IsDeleted { get; set; } = false;
 
         public virtual ICollection<User> Users
         {

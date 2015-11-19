@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IMappingService.cs" />
     <Compile Include="Services\CommunitiesService.cs" />
     <Compile Include="Contracts\IInvitationService.cs" />
     <Compile Include="Contracts\ICommunitiesService.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Contracts\IUsersService.cs" />
     <Compile Include="Services\InvitationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MappingService.cs" />
     <Compile Include="Services\ProposalService.cs" />
     <Compile Include="Services\TaxesService.cs" />
   </ItemGroup>

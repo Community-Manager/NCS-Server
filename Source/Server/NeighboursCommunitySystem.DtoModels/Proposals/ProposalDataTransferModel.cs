@@ -17,7 +17,7 @@
         {
             configuration.CreateMap<ProposalDataTransferModel, Proposal>()
                 .ForMember(m => m.AuthorId, opt => opt.MapFrom(pr => pr.UserId))
-                .ForMember(m => m.Community.Name, opt => opt.MapFrom(pr => pr.CommunityName))
+                .ForMember(m => m.Community, opt => opt.MapFrom(pr => pr.CommunityName))
                 .ForMember(m => m.Description, opt => opt.MapFrom(pr => pr.Description))
                 .ForMember(m => m.Title, opt => opt.MapFrom(pr => pr.Title));
 

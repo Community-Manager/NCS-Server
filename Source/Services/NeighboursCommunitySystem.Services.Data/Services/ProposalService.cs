@@ -10,9 +10,10 @@
         private readonly IRepository<Proposal> proposals;
         private readonly IRepository<Community> communities;
 
-        public ProposalService(IRepository<Proposal> proposals)
+        public ProposalService(IRepository<Proposal> proposals, IRepository<Community> communities)
         {
             this.proposals = proposals;
+            this.communities = communities;
         }
 
         public IQueryable<Proposal> All()

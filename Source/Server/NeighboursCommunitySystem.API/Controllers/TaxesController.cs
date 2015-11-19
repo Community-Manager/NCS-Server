@@ -74,7 +74,6 @@
             return this.Ok(communityTaxes);
         }
 
-        [ValidateModel]
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {

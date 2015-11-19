@@ -48,7 +48,7 @@
             }
         }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; }
 
         public int CommunityId { get; set; }
 
