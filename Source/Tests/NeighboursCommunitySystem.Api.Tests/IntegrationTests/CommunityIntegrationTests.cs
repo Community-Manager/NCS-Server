@@ -13,11 +13,8 @@
     public class CommunityIntegrationTests
     {
         [TestMethod]
-        public void ByProjectShouldReturnCorrectResponse()
+        public void GetShouldReturnCorrectResponse()
         {
-            // Required by the HttpServer to find controller in another assembly
-            var controller = typeof(CommunitiesController);
-
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
