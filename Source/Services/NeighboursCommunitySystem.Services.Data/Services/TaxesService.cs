@@ -1,6 +1,5 @@
 ﻿namespace NeighboursCommunitySystem.Services.Data.Services
 {
-    using System;
     using System.Linq;
     using Contracts;
     using Models;
@@ -22,6 +21,14 @@
         }
 
         public void DeleteById(int id)
+        {
+            var tax = taxes.GetById(id);
+            tax.IsDeleted = true;
+
+            taxes.SaveChanges();
+        }
+
+        public void RemoveById(int id)
         {
             taxes.Delete(id);
             taxes.SaveChanges();
@@ -64,6 +71,28 @@
             taxes.SaveChanges();
 
             return tax.Id;
+        }
+
+        public void AddPayment(int taxId, string userId, decimal amount)
+        {
+            var tax = taxes.GetById(taxId);
+            var payment = tax.Payments.FirstOrDefault(p => p.TaxId == taxId && p.UserId == userId);
+
+            if (payment != null)
+            {
+                payment.AmountPaid = amount;
+            }
+            else
+            {
+                tax.Payments.Add(new TaxPayment
+                {
+                    TaxId = taxId,
+                    UserId = userId,
+                    AmountPaid = amount
+                });
+            }
+            
+            taxes.SaveChanges();
         }
     }
 }

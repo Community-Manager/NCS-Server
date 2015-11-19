@@ -6,9 +6,10 @@
     using Data.DbContexts;
     using Microsoft.AspNet.Identity;
     using Models;
+    using AutoMapper.QueryableExtensions;
     using Server.DataTransferModels.Proposals;
     using Services.Data.Contracts;
-
+    using System.Linq;
 
     [BreezeController]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
@@ -43,6 +44,30 @@
             return this.Ok(model);
         }
 
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetByCommunity(int id)
+        {
+            var porposalsByCommunity = this.proposalService
+                                            .GetByCommunity(id)
+                                            .ProjectTo<ProposalResponseModel>()
+                                            .ToList();
+
+            return this.Ok(porposalsByCommunity);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult Votes(int id)
+        {
+            var votes = this.proposalService
+                            .GetVotes(id)
+                            .ProjectTo<VoteResponseModel>()
+                            .ToList();
+
+            return this.Ok(votes);
+        }
+
         [HttpPost]
         [Authorize]
         public IHttpActionResult VoteUp(int id)
@@ -58,6 +83,15 @@
         {
             var userId = this.User.Identity.GetUserId();
             this.proposalService.VoteDown(id, userId);
+            return this.Ok(id);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IHttpActionResult VoteNeutral(int id)
+        {
+            var userId = this.User.Identity.GetUserId();
+            this.proposalService.VoteNeutral(id, userId);
             return this.Ok(id);
         }
 

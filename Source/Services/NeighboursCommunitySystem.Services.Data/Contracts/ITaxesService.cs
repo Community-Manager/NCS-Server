@@ -14,7 +14,11 @@
 
         Tax GetById(int id);
 
+        void AddPayment(int taxId, string userId, decimal amount);
+
         void DeleteById(int id);
+
+        void RemoveById(int id);
 
         void UpdateById(int id, TaxDataTransferModel model);
     }

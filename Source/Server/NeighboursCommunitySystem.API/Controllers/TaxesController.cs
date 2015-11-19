@@ -74,6 +74,8 @@
             return this.Ok(communityTaxes);
         }
 
+
+        [ValidateModel]
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {
@@ -87,6 +89,31 @@
             int taxId = taxes.Add(model);
 
             return this.Ok(taxId);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "Administrator,Accountant")]
+        public IHttpActionResult Delete(int id)
+        {
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
+            var communityId = taxes.GetById(id).CommunityId; ;
+
+            if (!ValidateCurrentUserCommunity(communityId))
+            {
+                return this.Unauthorized();
+            }
+
+            taxes.DeleteById(id);
+
+            return this.Ok();
         }
 
         [HttpDelete]
@@ -109,7 +136,7 @@
                 return this.Unauthorized();
             }
 
-            taxes.DeleteById(id);
+            taxes.RemoveById(id);
 
             return this.Ok();
         }
@@ -178,6 +205,29 @@
 
             return this.Ok(expiredTaxes);
         }
+
+        [ValidateModel]
+        [Authorize(Roles = "Administrator,Accountant")]
+        public IHttpActionResult AddPayment(int id, TaxPaymentRequestModel model)
+        {
+            var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
+            if(!this.communities.HasUser(tax.CommunityId, model.UserId))
+            {
+                return this.NotFound();
+            }
+
+            taxes.AddPayment(id, model.UserId, model.Amount);
+
+            return this.Ok();
+        }
+
+        // TODO: To refactor.
 
         [NonAction]
         public bool ValidateCurrentUserCommunity(int communityId)
