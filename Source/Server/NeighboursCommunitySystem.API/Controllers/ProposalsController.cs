@@ -50,7 +50,7 @@
         {
             var porposalsByCommunity = this.proposalService
                                             .GetByCommunity(id)
-                                            .ProjectTo<ProposalDataTransferModel>()
+                                            .ProjectTo<ProposalResponseModel>()
                                             .ToList();
 
             return this.Ok(porposalsByCommunity);
