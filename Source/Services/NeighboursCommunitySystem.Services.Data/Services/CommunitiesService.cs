@@ -81,5 +81,11 @@
                 .All()
                 .Any(c => c.Id == communityId && c.Users.Any(u => u.Id == userId));
         }
+
+
+        public Community FindByName(string name)
+        {
+            return this.communities.All().FirstOrDefault(c => c.Name == name);
+        }
     }
 }

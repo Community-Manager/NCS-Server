@@ -15,15 +15,17 @@
     public class ProposalsController : ApiController
     {
         private readonly IProposalService proposalService;
+        private readonly ICommunitiesService communityService;
         private readonly IMappingService mappingService;
 
         private readonly EFContextProvider<NeighboursCommunityDbContext> contextProvider =
             new EFContextProvider<NeighboursCommunityDbContext>();
 
-        public ProposalsController(IProposalService proposalService, IMappingService mappingService)
+        public ProposalsController(IProposalService proposalService, IMappingService mappingService, ICommunitiesService communityService)
         {
             this.proposalService = proposalService;
             this.mappingService = mappingService;
+            this.communityService = communityService;
         }
 
         [HttpGet]
@@ -61,11 +63,12 @@
 
         [HttpPost]
         [Authorize]
-        [Route("api/Proposals/Add")]
         public IHttpActionResult Post(ProposalDataTransferModel proposalModel)
         {
+            var community = this.communityService.FindByName(proposalModel.CommunityName);
+            var communityId = community.Id;
             var userId = this.User.Identity.GetUserId();
-            this.proposalService.Add(this.mappingService.Map<Proposal>(proposalModel));
+            this.proposalService.Add(this.mappingService.Map<Proposal>(proposalModel), userId, communityId);
             return this.Ok();
         }
     }

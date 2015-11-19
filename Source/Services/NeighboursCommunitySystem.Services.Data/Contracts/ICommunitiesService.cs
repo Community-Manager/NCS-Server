@@ -10,6 +10,8 @@
 
         Community GetById(int id);
 
+        Community FindByName(string name);
+
         int Add(CommunityDataTransferModel model);
 
         int Update(CommunityDataTransferModel model);

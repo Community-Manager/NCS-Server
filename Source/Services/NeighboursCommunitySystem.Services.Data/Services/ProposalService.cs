@@ -58,20 +58,23 @@
         }
 
 
-        public void Add(Proposal proposal)
+        public void Add(Proposal proposal, string userId, int communityId)
         {
-            var community = this.communities.All().FirstOrDefault(c => c.Name == proposal.Community.Name);
+
+            var community = this.communities.All().FirstOrDefault(c => c.Id == communityId);
             var proposalToAdd = new Proposal()
             {
                 Community = community,
                 Description = proposal.Description,
                 Title = proposal.Title,
-                AuthorId = proposal.AuthorId
+                AuthorId = userId
 
             };
 
             this.proposals.Add(proposalToAdd);
             this.proposals.SaveChanges();
         }
+
+
     }
 }
