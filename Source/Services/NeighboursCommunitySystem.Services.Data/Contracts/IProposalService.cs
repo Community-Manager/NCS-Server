@@ -9,6 +9,8 @@
 
         IQueryable<Proposal> GetByCommunity(int id);
 
+        IQueryable<Vote> GetVotes(int id);
+
         void VoteUp(int id, string userId);
 
         void VoteDown(int id, string userId);

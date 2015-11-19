@@ -73,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proposals\ProposalDataTransferModel.cs" />
     <Compile Include="Proposals\ProposalResponseModel.cs" />
+    <Compile Include="Proposals\VoteResponseModel.cs" />
     <Compile Include="Taxes\TaxDataTransferModel.cs" />
     <Compile Include="Taxes\TaxPaymentRequestModel.cs" />
     <Compile Include="Taxes\TaxRequestTransferModel.cs" />

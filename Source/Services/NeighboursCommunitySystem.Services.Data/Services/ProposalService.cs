@@ -26,6 +26,11 @@
             return this.proposals.All().Where(p => p.CommunityId == id);
         }
 
+        public IQueryable<Vote> GetVotes(int id)
+        {
+            return this.proposals.GetById(id).Votes.AsQueryable();
+        }
+
         public void VoteUp(int id, string userId)
         {
             var proposal = this.proposals.GetById(id);

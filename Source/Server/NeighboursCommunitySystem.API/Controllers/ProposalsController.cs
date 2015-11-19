@@ -56,6 +56,16 @@
             return this.Ok(porposalsByCommunity);
         }
 
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult Votes(int id)
+        {
+            var votes = this.proposalService
+                            .GetVotes(id);
+
+            return this.Ok(votes);
+        }
+
         [HttpPost]
         [Authorize]
         public IHttpActionResult VoteUp(int id)
