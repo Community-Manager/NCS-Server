@@ -204,6 +204,25 @@
             return this.Ok(expiredTaxes);
         }
 
+        [ValidateModel]
+        [Authorize(Roles = "Administrator,Accountant")]
+        public IHttpActionResult AddPayment(int id, TaxPaymentRequest model)
+        {
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
+
+            return this.Ok();
+        }
+
+        // TODO: To refactor.
+
         [NonAction]
         public bool ValidateCurrentUserCommunity(int communityId)
         {
