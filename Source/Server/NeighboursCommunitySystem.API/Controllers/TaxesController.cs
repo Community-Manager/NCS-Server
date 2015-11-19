@@ -91,7 +91,7 @@
 
         [HttpDelete]
         [Authorize(Roles = "Administrator,Accountant")]
-        public IHttpActionResult Remove(int id)
+        public IHttpActionResult Delete(int id)
         {
             this.currentUserId = this.User.Identity.GetUserId();
 
@@ -110,6 +110,31 @@
             }
 
             taxes.DeleteById(id);
+
+            return this.Ok();
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "Administrator,Accountant")]
+        public IHttpActionResult Remove(int id)
+        {
+            this.currentUserId = this.User.Identity.GetUserId();
+
+            var tax = taxes.GetById(id);
+
+            if (tax == null)
+            {
+                return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
+            }
+
+            var communityId = taxes.GetById(id).CommunityId; ;
+
+            if (!ValidateCurrentUserCommunity(communityId))
+            {
+                return this.Unauthorized();
+            }
+
+            taxes.RemoveById(id);
 
             return this.Ok();
         }

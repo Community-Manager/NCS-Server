@@ -16,6 +16,8 @@
 
         void DeleteById(int id);
 
+        void RemoveById(int id);
+
         void UpdateById(int id, TaxDataTransferModel model);
     }
 }

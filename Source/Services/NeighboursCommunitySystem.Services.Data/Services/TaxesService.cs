@@ -23,6 +23,14 @@
 
         public void DeleteById(int id)
         {
+            var tax = taxes.GetById(id);
+            tax.IsDeleted = true;
+
+            taxes.SaveChanges();
+        }
+
+        public void RemoveById(int id)
+        {
             taxes.Delete(id);
             taxes.SaveChanges();
         }
