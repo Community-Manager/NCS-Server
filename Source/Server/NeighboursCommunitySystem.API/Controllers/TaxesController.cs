@@ -206,7 +206,7 @@
 
         [ValidateModel]
         [Authorize(Roles = "Administrator,Accountant")]
-        public IHttpActionResult AddPayment(int id, TaxPaymentRequest model)
+        public IHttpActionResult AddPayment(int id, TaxPaymentRequestModel model)
         {
             this.currentUserId = this.User.Identity.GetUserId();
 
@@ -217,6 +217,12 @@
                 return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
             }
 
+            if(this.communities.HasUser(tax.CommunityId, model.UserId))
+            {
+                return this.NotFound();
+            }
+
+            taxes.AddPayment(id, model.UserId, model.Amount);
 
             return this.Ok();
         }

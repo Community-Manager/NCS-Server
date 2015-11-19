@@ -73,5 +73,19 @@
 
             return tax.Id;
         }
+
+        public void AddPayment(int taxId, string userId, decimal amount)
+        {
+            var tax = taxes.GetById(taxId);
+
+            tax.Payments.Add(new TaxPayment
+            {
+                TaxId = taxId,
+                UserId = userId,
+                AmountPaid = amount
+            });
+
+            taxes.SaveChanges();
+        }
     }
 }

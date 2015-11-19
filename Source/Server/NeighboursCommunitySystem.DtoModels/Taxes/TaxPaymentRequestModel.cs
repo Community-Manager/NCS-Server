@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class TaxPaymentRequest
+    public class TaxPaymentRequestModel
     {
         [Required]
         public string UserId { get; set; }
