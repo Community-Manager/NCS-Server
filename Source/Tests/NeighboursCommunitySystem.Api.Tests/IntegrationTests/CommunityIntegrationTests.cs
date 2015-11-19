@@ -50,5 +50,23 @@
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             }
         }
+
+        [TestMethod]
+        public void GetByInvalidUserIdShouldReturnCorrectResponse()
+        {
+            using (httpInvoker)
+            {
+                var request = new HttpRequestMessage
+                {
+                    RequestUri = new Uri("http://test.com/api/communities/getbyid/invalidUser"),
+                    Method = HttpMethod.Get
+                };
+
+                var result = httpInvoker.SendAsync(request, CancellationToken.None).Result;
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
+            }
+        }
     }
 }
