@@ -60,6 +60,7 @@
 
         [HttpPost]
         [Authorize]
+        [Route("Add")]
         public IHttpActionResult Post(ProposalDataTransferModel proposalModel)
         {
             var userId = this.User.Identity.GetUserId();
