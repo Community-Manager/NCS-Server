@@ -114,17 +114,39 @@
 
         public IQueryable<Proposal> GetByCommunity(int id)
         {
-            throw new System.NotImplementedException();
+            return this.proposals.All().Where(p => p.CommunityId == id);
         }
 
         public IQueryable<Vote> GetVotes(int id)
         {
-            throw new System.NotImplementedException();
+            return this.proposals.GetById(id).Votes.AsQueryable();
         }
 
         public void VoteNeutral(int id, string userId)
         {
-            throw new System.NotImplementedException();
+            var proposal = this.proposals.GetById(id);
+
+            if (proposal != null)
+            {
+                var vote = proposal.Votes.FirstOrDefault(p => p.ProposalId == id && p.UserId == userId);
+
+                if (vote != null)
+                {
+                    vote.OptionId = 3;
+                }
+                else
+                {
+                    proposal.Votes.Add(new Vote()
+                    {
+                        OptionId = 3,
+                        UserId = userId,
+                        ProposalId = id
+                    });
+                }
+            }
+
+            this.proposals.Update(proposal);
+            this.proposals.SaveChanges();
         }
     }
 }
