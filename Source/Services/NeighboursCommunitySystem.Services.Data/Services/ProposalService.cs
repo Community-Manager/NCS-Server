@@ -27,12 +27,21 @@
 
             if (proposal != null)
             {
-                proposal.Votes.Add(new Vote()
+                var vote = proposal.Votes.FirstOrDefault(p => p.ProposalId == id && p.UserId == userId);
+
+                if (vote != null)
                 {
-                    OptionId = 1,
-                    UserId = userId,
-                    ProposalId = id
-                });
+                    vote.OptionId = 1;
+                }
+                else
+                {
+                    proposal.Votes.Add(new Vote()
+                    {
+                        OptionId = 1,
+                        UserId = userId,
+                        ProposalId = id
+                    });
+                }
             }
 
             this.proposals.Update(proposal);
@@ -46,35 +55,68 @@
 
             if (proposal != null)
             {
-                proposal.Votes.Add(new Vote()
+                var vote = proposal.Votes.FirstOrDefault(p => p.ProposalId == id && p.UserId == userId);
+
+                if (vote != null)
                 {
-                    OptionId = 2,
-                    UserId = "2"
-                });
+                    vote.OptionId = 2;
+                }
+                else
+                {
+                    proposal.Votes.Add(new Vote()
+                    {
+                        OptionId = 2,
+                        UserId = userId,
+                        ProposalId = id
+                    });
+                }
             }
 
             this.proposals.Update(proposal);
             this.proposals.SaveChanges();
         }
 
+        public void VoteNeutral(int id, string userId)
+        {
+            var proposal = this.proposals.GetById(id);
+
+            if (proposal != null)
+            {
+                var vote = proposal.Votes.FirstOrDefault(p => p.ProposalId == id && p.UserId == userId);
+
+                if (vote != null)
+                {
+                    vote.OptionId = 3;
+                }
+                else
+                {
+                    proposal.Votes.Add(new Vote()
+                    {
+                        OptionId = 3,
+                        UserId = userId,
+                        ProposalId = id
+                    });
+                }
+            }
+
+            this.proposals.Update(proposal);
+            this.proposals.SaveChanges();
+        }
 
         public void Add(Proposal proposal, string userId, int communityId)
         {
-
             var community = this.communities.All().FirstOrDefault(c => c.Id == communityId);
+
             var proposalToAdd = new Proposal()
             {
                 Community = community,
                 Description = proposal.Description,
                 Title = proposal.Title,
                 AuthorId = userId
-
             };
 
             this.proposals.Add(proposalToAdd);
             this.proposals.SaveChanges();
         }
-
-
     }
 }
