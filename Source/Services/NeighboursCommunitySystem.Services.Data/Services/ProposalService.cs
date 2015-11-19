@@ -85,5 +85,21 @@
             this.proposals.Add(proposalToAdd);
             this.proposals.SaveChanges();
         }
+
+
+        public IQueryable<Proposal> GetByCommunity(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<Vote> GetVotes(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void VoteNeutral(int id, string userId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
