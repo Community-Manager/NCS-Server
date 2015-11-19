@@ -11,9 +11,9 @@
 
         IQueryable<Vote> GetVotes(int id);
 
-        void VoteUp(int id, string userId);
+        int VoteUp(int id, string userId);
 
-        void VoteDown(int id, string userId);
+        int VoteDown(int id, string userId);
 
         void VoteNeutral(int id, string userId);
 
