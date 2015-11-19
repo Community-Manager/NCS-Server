@@ -61,7 +61,9 @@
         public IHttpActionResult Votes(int id)
         {
             var votes = this.proposalService
-                            .GetVotes(id);
+                            .GetVotes(id)
+                            .ProjectTo<VoteResponseModel>()
+                            .ToList();
 
             return this.Ok(votes);
         }

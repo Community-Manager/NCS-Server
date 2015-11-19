@@ -23,7 +23,7 @@
         {
             configuration.CreateMap<Vote, VoteResponseModel>()
                 .ForMember(v => v.UserName, opt => opt.MapFrom(vo => repo.GetById(vo.UserId).FirstName))
-                .ForMember(v => v.Vote, opt => opt.MapFrom(vo => vo.Option.ToString()));
+                .ForMember(v => v.Vote, opt => opt.MapFrom(vo => vo.Option.Option.ToString()));
         }
     }
 }
