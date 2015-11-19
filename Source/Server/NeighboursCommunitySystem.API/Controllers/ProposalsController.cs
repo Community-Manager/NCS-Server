@@ -1,5 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
+    using System;
     using System.Web.Http;
     using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
@@ -72,8 +73,20 @@
         [Authorize]
         public IHttpActionResult VoteUp(int id)
         {
+            try
+            {
+
+           
             var userId = this.User.Identity.GetUserId();
             this.proposalService.VoteUp(id, userId);
+            
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                var e = ex;
+                Console.WriteLine(ex);
+
+            }
             return this.Ok(id);
         }
 

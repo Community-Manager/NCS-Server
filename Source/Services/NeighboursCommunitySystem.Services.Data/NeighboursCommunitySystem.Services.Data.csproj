@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IMappingService.cs" />
+    <Compile Include="Contracts\IVotesService.cs" />
     <Compile Include="Services\CommunitiesService.cs" />
     <Compile Include="Contracts\IInvitationService.cs" />
     <Compile Include="Contracts\ICommunitiesService.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Services\MappingService.cs" />
     <Compile Include="Services\ProposalService.cs" />
     <Compile Include="Services\TaxesService.cs" />
+    <Compile Include="Services\VotesService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\NeighboursCommunitSystem.Common\NeighboursCommunitySystem.Common.csproj">

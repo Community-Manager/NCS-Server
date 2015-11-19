@@ -9,11 +9,15 @@
     {
         private readonly IRepository<Proposal> proposals;
         private readonly IRepository<Community> communities;
+        private readonly IRepository<Vote> votes;
+        private readonly IRepository<User> users;
 
-        public ProposalService(IRepository<Proposal> proposals, IRepository<Community> communities)
+        public ProposalService(IRepository<Proposal> proposals, IRepository<Community> communities, IRepository<Vote> votes, IRepository<User> users)
         {
             this.proposals = proposals;
             this.communities = communities;
+            this.votes = votes;
+            this.users = users;
         }
 
         public IQueryable<Proposal> All()
@@ -23,6 +27,8 @@
 
         public void VoteUp(int id, string userId)
         {
+
+            var user = this.users.GetById(userId);
             var proposal = this.proposals.GetById(id);
 
             if (proposal != null)
@@ -31,34 +37,47 @@
 
                 if (voted == null)
                 {
-
-                    proposal.Votes.Add(new Vote()
+                    var vote = new Vote()
                     {
                         OptionId = 1,
-                        UserId = userId,
+                        User = user,
                         ProposalId = id
-                    });
+                    };
+
+                    user.Votes.Add(vote);
+                    this.users.SaveChanges();
+
+                    this.votes.SaveChanges();
+
                 }
                 else
                 {
                     if (voted.OptionId == 1)
                     {
-                        voted.OptionId = 0;
+                        voted.OptionId = 3;
                     }
-                    else if (voted.OptionId == 2 || voted.OptionId == 0)
+                    else if (voted.OptionId == 2 || voted.OptionId == 3)
                     {
                         voted.OptionId = 1;
                     }
+
+                    this.votes.SaveChanges();
                 }
+
+                this.proposals.Update(proposal);
+                this.proposals.SaveChanges();
             }
 
-            this.proposals.Update(proposal);
-            this.proposals.SaveChanges();
+
+
+
 
         }
 
         public void VoteDown(int id, string userId)
         {
+            var user = this.users.GetById(userId);
+
             var proposal = this.proposals.GetById(id);
 
 
@@ -68,23 +87,29 @@
 
                 if (voted == null)
                 {
-                    proposal.Votes.Add(new Vote()
+                    var vote = new Vote()
                     {
                         OptionId = 2,
-                        UserId = userId,
+                        User = user,
                         ProposalId = id
-                    });
+                    };
+
+                    user.Votes.Add(vote);
+                    this.users.SaveChanges();
+
+                    this.votes.SaveChanges();
                 }
                 else
                 {
                     if (voted.OptionId == 2)
                     {
-                        voted.OptionId = 0;
+                        voted.OptionId = 3;
                     }
-                    else if (voted.OptionId == 1 || voted.OptionId == 0)
+                    else if (voted.OptionId == 1 || voted.OptionId == 3)
                     {
                         voted.OptionId = 2;
                     }
+                    this.votes.SaveChanges();
                 }
 
             }

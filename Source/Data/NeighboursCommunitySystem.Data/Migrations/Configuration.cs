@@ -52,7 +52,9 @@ namespace NeighboursCommunitySystem.Data.Migrations
             var optionAgainst = new VoteOption { Option = Options.Against };
             var optionAbstention = new VoteOption { Option = Options.Abstention };
 
-            context.VotingOptions.AddOrUpdate(optionFor, optionAgainst, optionAbstention);
+            context.VotingOptions.AddOrUpdate(optionFor);
+            context.VotingOptions.AddOrUpdate(optionAgainst);
+            context.VotingOptions.AddOrUpdate(optionAbstention);
 
             context.SaveChanges();
         }
@@ -63,7 +65,9 @@ namespace NeighboursCommunitySystem.Data.Migrations
             frenchCommunity = new Community() { Name = "FRPSCG14", Description = "France`s first community group in Paris, \"Charles de Gaule\", block 14." };
             americanCommunity = new Community() { Name = "USNYNY7", Description = "USA`s first community group for the citizens of New York, 7th Skyscrapper." };
 
-            context.Communities.AddOrUpdate(bulgarianCommunity, frenchCommunity, americanCommunity);
+            context.Communities.AddOrUpdate(bulgarianCommunity);
+            context.Communities.AddOrUpdate(frenchCommunity);
+            context.Communities.AddOrUpdate(americanCommunity);
 
             context.SaveChanges();
         }
