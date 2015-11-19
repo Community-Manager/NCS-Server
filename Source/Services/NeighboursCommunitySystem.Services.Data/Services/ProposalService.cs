@@ -8,6 +8,7 @@
     public class ProposalService : IProposalService
     {
         private readonly IRepository<Proposal> proposals;
+        private readonly IRepository<Community> communities;
 
         public ProposalService(IRepository<Proposal> proposals)
         {
@@ -52,6 +53,23 @@
             }
 
             this.proposals.Update(proposal);
+            this.proposals.SaveChanges();
+        }
+
+
+        public void Add(Proposal proposal)
+        {
+            var community = this.communities.All().FirstOrDefault(c => c.Name == proposal.Community.Name);
+            var proposalToAdd = new Proposal()
+            {
+                Community = community,
+                Description = proposal.Description,
+                Title = proposal.Title,
+                AuthorId = proposal.AuthorId
+
+            };
+
+            this.proposals.Add(proposalToAdd);
             this.proposals.SaveChanges();
         }
     }

@@ -5,6 +5,8 @@
     using Breeze.WebApi2;
     using Data.DbContexts;
     using Microsoft.AspNet.Identity;
+    using Models;
+    using Server.DataTransferModels.Proposals;
     using Services.Data.Contracts;
 
     [BreezeController]
@@ -13,6 +15,7 @@
     public class ProposalsController : ApiController
     {
         private readonly IProposalService proposalService;
+        private readonly IMappingService mappingService;
 
         private readonly EFContextProvider<NeighboursCommunityDbContext> contextProvider =
             new EFContextProvider<NeighboursCommunityDbContext>();
@@ -53,6 +56,15 @@
             var userId = this.User.Identity.GetUserId();
             this.proposalService.VoteDown(id, userId);
             return this.Ok(id);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IHttpActionResult Post(ProposalDataTransferModel proposalModel)
+        {
+            var userId = this.User.Identity.GetUserId();
+            this.proposalService.Add(this.mappingService.Map<Proposal>(proposalModel));
+            return this.Ok();
         }
     }
 }

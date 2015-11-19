@@ -8,6 +8,7 @@
         IQueryable<Proposal> All();
         void VoteUp(int id, string userId);
         void VoteDown(int id, string userId);
+        void Add(Proposal proposal);
 
     }
 }

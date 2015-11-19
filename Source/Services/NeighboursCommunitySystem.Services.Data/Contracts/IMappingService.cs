@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BugLogger.Service.Common
+﻿
+namespace NeighboursCommunitySystem.Services.Data.Contracts
 {
-    using Services.Data;
-
     public interface IMappingService : IService
     {
         T Map<T>(object source);
