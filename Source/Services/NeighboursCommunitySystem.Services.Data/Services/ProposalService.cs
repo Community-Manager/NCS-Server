@@ -27,12 +27,29 @@
 
             if (proposal != null)
             {
-                proposal.Votes.Add(new Vote()
+                var voted = proposal.Votes.FirstOrDefault(v => v.UserId == userId);
+
+                if (voted == null)
                 {
-                    OptionId = 1,
-                    UserId = userId,
-                    ProposalId = id
-                });
+
+                    proposal.Votes.Add(new Vote()
+                    {
+                        OptionId = 1,
+                        UserId = userId,
+                        ProposalId = id
+                    });
+                }
+                else
+                {
+                    if (voted.OptionId == 1)
+                    {
+                        voted.OptionId = 0;
+                    }
+                    else if (voted.OptionId == 2 || voted.OptionId == 0)
+                    {
+                        voted.OptionId = 1;
+                    }
+                }
             }
 
             this.proposals.Update(proposal);
@@ -60,8 +77,16 @@
                 }
                 else
                 {
-                    voted.OptionId = 2;
+                    if (voted.OptionId == 2)
+                    {
+                        voted.OptionId = 0;
+                    }
+                    else if (voted.OptionId == 1 || voted.OptionId == 0)
+                    {
+                        voted.OptionId = 2;
+                    }
                 }
+
             }
 
             this.proposals.Update(proposal);
