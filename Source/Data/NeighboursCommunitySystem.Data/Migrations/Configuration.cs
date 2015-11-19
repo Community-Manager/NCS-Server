@@ -8,7 +8,6 @@ namespace NeighboursCommunitySystem.Data.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
 
-
     public sealed class Configuration : DbMigrationsConfiguration<NeighboursCommunityDbContext>
     {
         public Configuration()

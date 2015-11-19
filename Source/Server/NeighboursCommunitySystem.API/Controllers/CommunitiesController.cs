@@ -20,7 +20,6 @@
     using AutoMapper.QueryableExtensions;
     using Services.Data.Services;
     using Data.Repositories;
-    using Data.DbContexts;
 
     [BreezeController]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]

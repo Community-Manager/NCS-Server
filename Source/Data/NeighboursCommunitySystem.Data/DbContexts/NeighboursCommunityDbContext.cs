@@ -9,11 +9,10 @@
         public NeighboursCommunityDbContext()
             : base("NeighboursCommunitySystem", throwIfV1Schema: false)
         {
-            //Configuration.ProxyCreationEnabled = false;
-            //Configuration.LazyLoadingEnabled = false;
+            // Configuration.ProxyCreationEnabled = false;
+            // Configuration.LazyLoadingEnabled = false;
         }
-
-
+        
         public virtual IDbSet<Tax> Taxes { get; set; }
 
         public virtual IDbSet<Proposal> Proposals { get; set; }
