@@ -37,6 +37,7 @@
             {
                 return this.deadline;
             }
+
             set
             {
                 if (value.Date.CompareTo(DateTime.Now.AddDays(1).Date) <= 0)

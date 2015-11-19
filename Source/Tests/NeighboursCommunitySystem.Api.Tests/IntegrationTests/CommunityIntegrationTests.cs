@@ -12,13 +12,14 @@
     [TestClass]
     public class CommunityIntegrationTests
     {
-        [TestMethod]
-        public void ByProjectShouldReturnCorrectResponse()
-        {
-            // Required by the HttpServer to find controller in another assembly
-            var controller = typeof(CommunitiesController);
+        private HttpServer httpServer;
+        private HttpMessageInvoker httpInvoker;
+        private HttpConfiguration config;
 
-            var config = new HttpConfiguration();
+        [TestInitialize]
+        public void IntegrationInit()
+        {
+            config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -28,9 +29,13 @@
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            var httpServer = new HttpServer(config);
-            var httpInvoker = new HttpMessageInvoker(httpServer);
+            httpServer = new HttpServer(config);
+            httpInvoker = new HttpMessageInvoker(httpServer);
+        }
 
+        [TestMethod]
+        public void GetShouldReturnCorrectResponse()
+        {
             using (httpInvoker)
             {
                 var request = new HttpRequestMessage
@@ -43,6 +48,24 @@
 
                 Assert.IsNotNull(result);
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            }
+        }
+
+        [TestMethod]
+        public void GetByInvalidUserIdShouldReturnCorrectResponse()
+        {
+            using (httpInvoker)
+            {
+                var request = new HttpRequestMessage
+                {
+                    RequestUri = new Uri("http://test.com/api/communities/getbyid/invalidUser"),
+                    Method = HttpMethod.Get
+                };
+
+                var result = httpInvoker.SendAsync(request, CancellationToken.None).Result;
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
             }
         }
     }

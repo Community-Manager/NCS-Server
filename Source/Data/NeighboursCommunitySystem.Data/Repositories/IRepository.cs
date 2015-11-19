@@ -5,8 +5,7 @@
 
     public interface IRepository<T> : IDisposable 
         where T : class
-    {
-        
+    {        
         IQueryable<T> All();
 
         T GetById(object id);

@@ -2,10 +2,10 @@
 {
     using System;
     using System.Data.Entity;
-    using System.Linq;
-    using DbContexts;
     using System.Data.Entity.Validation;
+    using System.Linq;
     using CustomExceptions;
+    using DbContexts;
 
     public class EfGenericRepository<T> : IRepository<T>
         where T : class

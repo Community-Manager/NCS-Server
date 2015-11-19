@@ -18,6 +18,8 @@
     using Services.Data.Contracts;
     using Models;
     using AutoMapper.QueryableExtensions;
+    using Services.Data.Services;
+    using Data.Repositories;
 
     [BreezeController]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
@@ -29,6 +31,12 @@
         public CommunitiesController(ICommunitiesService communities)
         {
             this.communities = communities;
+        }
+
+        // TODO: Ged rid of poor man's dependency inversion and find a library for using ninject with the tests.
+        public CommunitiesController()
+            : this (new CommunitiesService(new EfGenericRepository<Community>(new NeighboursCommunityDbContext())))
+        {
         }
 
         public ApplicationUserManager UserManager
