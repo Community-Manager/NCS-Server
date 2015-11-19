@@ -7,14 +7,10 @@
     [HubName("stickyNotesHub")]
     public class StickyNotesHub : Hub
     {
-
-
-        public void AddProposal()
+        public void VoteUpProposal()
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
-            context.Clients.All.addMe();
-            // It is calling a js function :)
-            // Will explain later
+            context.Clients.All.refresh();
         }
 
         public override Task OnConnected()

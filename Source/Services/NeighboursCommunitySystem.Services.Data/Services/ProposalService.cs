@@ -44,13 +44,24 @@
         {
             var proposal = this.proposals.GetById(id);
 
+
             if (proposal != null)
             {
-                proposal.Votes.Add(new Vote()
+                var voted = proposal.Votes.FirstOrDefault(v => v.UserId == userId);
+
+                if (voted == null)
                 {
-                    OptionId = 2,
-                    UserId = "2"
-                });
+                    proposal.Votes.Add(new Vote()
+                    {
+                        OptionId = 2,
+                        UserId = userId,
+                        ProposalId = id
+                    });
+                }
+                else
+                {
+                    voted.OptionId = 2;
+                }
             }
 
             this.proposals.Update(proposal);
@@ -74,7 +85,5 @@
             this.proposals.Add(proposalToAdd);
             this.proposals.SaveChanges();
         }
-
-
     }
 }
