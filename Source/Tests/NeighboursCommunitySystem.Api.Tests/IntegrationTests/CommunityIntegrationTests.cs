@@ -12,10 +12,14 @@
     [TestClass]
     public class CommunityIntegrationTests
     {
-        [TestMethod]
-        public void GetShouldReturnCorrectResponse()
+        private HttpServer httpServer;
+        private HttpMessageInvoker httpInvoker;
+        private HttpConfiguration config;
+
+        [TestInitialize]
+        public void IntegrationInit()
         {
-            var config = new HttpConfiguration();
+            config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -25,9 +29,13 @@
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
-            var httpServer = new HttpServer(config);
-            var httpInvoker = new HttpMessageInvoker(httpServer);
+            httpServer = new HttpServer(config);
+            httpInvoker = new HttpMessageInvoker(httpServer);
+        }
 
+        [TestMethod]
+        public void GetShouldReturnCorrectResponse()
+        {
             using (httpInvoker)
             {
                 var request = new HttpRequestMessage
