@@ -74,6 +74,8 @@
             return this.Ok(communityTaxes);
         }
 
+
+        [ValidateModel]
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult Post(TaxRequestTransferModel model)
         {
@@ -208,8 +210,6 @@
         [Authorize(Roles = "Administrator,Accountant")]
         public IHttpActionResult AddPayment(int id, TaxPaymentRequestModel model)
         {
-            this.currentUserId = this.User.Identity.GetUserId();
-
             var tax = taxes.GetById(id);
 
             if (tax == null)
@@ -217,7 +217,7 @@
                 return this.BadRequest(string.Format(ServerConstants.NoItemWithIdErrorMessageFormat, id));
             }
 
-            if(this.communities.HasUser(tax.CommunityId, model.UserId))
+            if(!this.communities.HasUser(tax.CommunityId, model.UserId))
             {
                 return this.NotFound();
             }

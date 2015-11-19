@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Contracts;
+    using System.Data.Entity.Migrations;
     using Models;
     using NeighboursCommunitySystem.Data.Repositories;
     using Server.DataTransferModels.Taxes;
@@ -77,13 +78,21 @@
         public void AddPayment(int taxId, string userId, decimal amount)
         {
             var tax = taxes.GetById(taxId);
+            var payment = tax.Payments.FirstOrDefault(p => p.TaxId == taxId && p.UserId == userId);
 
-            tax.Payments.Add(new TaxPayment
+            if (payment != null)
             {
-                TaxId = taxId,
-                UserId = userId,
-                AmountPaid = amount
-            });
+                payment.AmountPaid = amount;
+            }
+            else
+            {
+                tax.Payments.Add(new TaxPayment
+                {
+                    TaxId = taxId,
+                    UserId = userId,
+                    AmountPaid = amount
+                });
+            }
 
             taxes.SaveChanges();
         }
