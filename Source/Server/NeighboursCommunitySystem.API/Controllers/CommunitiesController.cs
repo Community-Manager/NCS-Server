@@ -17,6 +17,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Services.Data.Contracts;
     using Models;
+    using AutoMapper.QueryableExtensions;
 
     [BreezeController]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
@@ -72,6 +73,28 @@
 
             return this.Ok(result);
         }
+
+        [HttpPost]
+        [Authorize]
+        public IHttpActionResult PostCommunityByLoggedAdmin([FromBody]CommunityDataTransferModel model)
+        {
+            // Check if community with the same name already exists.
+            if (this.communities.All().Any(c => c.Name == model.Name))
+            {
+                return this.Ok("Community model with the same name already exists.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var newCommunityId = communities.Add(model);
+                return this.Ok(newCommunityId);
+            }
+            else
+            {
+                return this.BadRequest("not valid model input");
+            }              
+        }
+
 
         [ValidateModel]
         public async Task<IHttpActionResult> Post(CommunityWithAdminDataTransferModel model)
