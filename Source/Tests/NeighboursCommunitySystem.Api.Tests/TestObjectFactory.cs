@@ -5,6 +5,7 @@
     using Models;
     using Moq;
     using Services.Data.Contracts;
+    using Microsoft.AspNet.Identity;
     using Server.DataTransferModels.Taxes;
     using System;
 
@@ -32,11 +33,34 @@
             }
         }.AsQueryable();
 
+        private static readonly IQueryable<Community> communities = new List<Community>
+        {
+            new Community
+            {
+                Name = "Test Community 1",
+                Description = "Test description",
+                Users = new List<User> {new User { Id = "TestUserId"} }
+            },
+            new Community
+            {
+                Name = "Test Community 2",
+                Description = "Test description"
+            }
+        }.AsQueryable();
+
         internal static List<Tax> Taxes
         {
             get
             {
                 return taxes.ToList();
+            }
+        }
+
+        internal static List<Community> Communities
+        {
+            get
+            {
+                return communities.ToList();
             }
         }
 
@@ -78,6 +102,10 @@
             communitiesService
                 .Setup(c => c.HasUser(It.Is<int>(id => id == invalidId), It.IsAny<string>()))
                 .Returns(false);
+
+            communitiesService
+                .Setup(c => c.All())
+                .Returns(communities);
 
             return communitiesService.Object;
         }
