@@ -67,10 +67,10 @@
         }
 
         [HttpGet]
-        public IHttpActionResult GetById(string userId)
+        public IHttpActionResult GetById(string id)
         {
             var result = communities.All()
-                .Where(c => c.Users.Select(u => u.Id).Contains(userId))
+                .Where(c => c.Users.Select(u => u.Id).Contains(id))
                 .Select(c => new CommunityDataTransferModel()
                 {
                     Name = c.Name,

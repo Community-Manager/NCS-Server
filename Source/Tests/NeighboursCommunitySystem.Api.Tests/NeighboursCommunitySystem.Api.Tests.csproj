@@ -108,8 +108,10 @@
     <Compile Include="ControllerTests\TaxesControllerTests.cs" />
     <Compile Include="IntegrationTests\CommunityIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteTests\CommunitiesConttrolerRouteTests.cs" />
     <Compile Include="RouteTests\TaxesControllerRouteTests.cs" />
     <Compile Include="TestObjectFactory.cs" />
+    <Compile Include="TestsInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data\NeighboursCommunitySystem.Models\NeighboursCommunitySystem.Models.csproj">

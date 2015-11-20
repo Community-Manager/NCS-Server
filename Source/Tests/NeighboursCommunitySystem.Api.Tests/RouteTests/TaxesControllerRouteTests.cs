@@ -2,24 +2,13 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Net.Http;
-    using System.Web.Http;
-    using API;
     using MyTested.WebApi;
     using API.Controllers;
     using Server.DataTransferModels.Taxes;
-    using System;
 
     [TestClass]
     public class TaxesControllerRouteTests
-    {
-        [TestInitialize]
-        public void Initialize()
-        {
-            var config = new HttpConfiguration();
-            WebApiConfig.Register(config);
-            MyWebApi.IsUsing(config);
-        }
-
+    {        
         [TestMethod]
         public void GetWithIdShouldMapCorrectly()
         {
