@@ -1,15 +1,6 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Security.Claims;
-    using System.Security.Cryptography;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Http;
+    using Data.DbContexts;
     using Data.Repositories;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -22,6 +13,15 @@
     using Results;
     using Server.DataTransferModels.Accounts;
     using Server.Infrastructure.Validation;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Security.Claims;
+    using System.Security.Cryptography;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Http;
 
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -36,17 +36,16 @@
 
         public AccountController()
         {
+            // Fix it
+            this.invitations = new EfGenericRepository<Invitation>(new NeighboursCommunityDbContext());
+            this.communities = new EfGenericRepository<Community>(new NeighboursCommunityDbContext());
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
-            IRepository<Invitation> invitations,
-            IRepository<Community> communities)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat) : this()
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-            this.invitations = invitations;
-            this.communities = communities;
         }
 
         public ApplicationUserManager UserManager
@@ -348,22 +347,24 @@
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             // Checks if there was an invitation mail sent to the requester's email containing the current verification token.
-            var invitation = this.invitations.All()
-                .Where(x => x.VerificationToken == model.VerificationToken)
-                .FirstOrDefault();
+            var invitation = this.invitations
+                .All()
+                .FirstOrDefault(x => x.VerificationToken == model.VerificationToken && x.Email == model.Email);
 
             if (invitation == null)
             {
-                return this.StatusCode(HttpStatusCode.Forbidden);
+                return this.BadRequest("The email or token are not valid!");
             }
 
             var user = new User()
             {
+
                 UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                ApartmentNumber = model.ApartmentNumber
+                ApartmentNumber = model.ApartmentNumber,
+
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -376,13 +377,13 @@
             // Append user to the specified community.
             var communityName = invitation.VerificationToken.Substring(40);
 
-            var community = this.communities.All()
-                .Where(x => x.Name == communityName)
-                .FirstOrDefault();
+            var community = this.communities
+                .All()
+                .FirstOrDefault(x => x.Name == communityName);
 
             community.Users.Add(user);
 
-            this.communities.SaveChanges();
+
 
             return Ok();
         }
