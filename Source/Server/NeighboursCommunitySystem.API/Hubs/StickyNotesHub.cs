@@ -9,15 +9,14 @@
     {
         public void VoteProposal()
         {
-            //var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
-            this.Clients.Others.refresh();
+            var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
+            context.Clients.All.refresh();
         }
 
         public void AddProposal()
         {
-            //var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
-            this.Clients.Others.refreshAndRedirect();
-            this.Clients.Caller.refresh();
+            var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
+            context.Clients.All.refreshAndRedirect();
         }
 
         public override Task OnConnected()
