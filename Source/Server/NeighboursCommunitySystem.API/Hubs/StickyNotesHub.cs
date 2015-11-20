@@ -17,6 +17,7 @@
         {
             //var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
             this.Clients.Others.refreshAndRedirect();
+            this.Clients.Caller.refresh();
         }
 
         public override Task OnConnected()
