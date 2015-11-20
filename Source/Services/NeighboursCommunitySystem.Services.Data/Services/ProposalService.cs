@@ -25,9 +25,9 @@
             return this.proposals.All();
         }
 
-        public void VoteUp(int id, string userId)
+        public int VoteUp(int id, string userId)
         {
-
+            var upOrDown = 0;
             var user = this.users.GetById(userId);
             var proposal = this.proposals.GetById(id);
 
@@ -44,6 +44,7 @@
                         ProposalId = id
                     };
 
+                    upOrDown = 1;
                     user.Votes.Add(vote);
                     this.users.SaveChanges();
 
@@ -55,10 +56,14 @@
                     if (voted.OptionId == 1)
                     {
                         voted.OptionId = 3;
+                        upOrDown = 0;
+
                     }
                     else if (voted.OptionId == 2 || voted.OptionId == 3)
                     {
                         voted.OptionId = 1;
+                        upOrDown = 1;
+
                     }
 
                     this.votes.SaveChanges();
@@ -68,18 +73,15 @@
                 this.proposals.SaveChanges();
             }
 
-
-
-
-
+            return upOrDown;
         }
 
-        public void VoteDown(int id, string userId)
+        public int VoteDown(int id, string userId)
         {
             var user = this.users.GetById(userId);
 
             var proposal = this.proposals.GetById(id);
-
+            var upOrDown = 0;
 
             if (proposal != null)
             {
@@ -94,6 +96,8 @@
                         ProposalId = id
                     };
 
+                    upOrDown = 1;
+
                     user.Votes.Add(vote);
                     this.users.SaveChanges();
 
@@ -104,19 +108,23 @@
                     if (voted.OptionId == 2)
                     {
                         voted.OptionId = 3;
+                        upOrDown = 0;
                     }
                     else if (voted.OptionId == 1 || voted.OptionId == 3)
                     {
                         voted.OptionId = 2;
+                        upOrDown = 1;
                     }
                     this.votes.SaveChanges();
                 }
-
             }
 
             this.proposals.Update(proposal);
             this.proposals.SaveChanges();
+            return upOrDown;
         }
+
+
 
 
         public void Add(Proposal proposal, string userId, int communityId)
@@ -139,39 +147,17 @@
 
         public IQueryable<Proposal> GetByCommunity(int id)
         {
-            return this.proposals.All().Where(p => p.CommunityId == id);
+            throw new System.NotImplementedException();
         }
 
         public IQueryable<Vote> GetVotes(int id)
         {
-            return this.proposals.GetById(id).Votes.AsQueryable();
+            throw new System.NotImplementedException();
         }
 
         public void VoteNeutral(int id, string userId)
         {
-            var proposal = this.proposals.GetById(id);
-
-            if (proposal != null)
-            {
-                var vote = proposal.Votes.FirstOrDefault(p => p.ProposalId == id && p.UserId == userId);
-
-                if (vote != null)
-                {
-                    vote.OptionId = 3;
-                }
-                else
-                {
-                    proposal.Votes.Add(new Vote()
-                    {
-                        OptionId = 3,
-                        UserId = userId,
-                        ProposalId = id
-                    });
-                }
-            }
-
-            this.proposals.Update(proposal);
-            this.proposals.SaveChanges();
+            throw new System.NotImplementedException();
         }
     }
 }

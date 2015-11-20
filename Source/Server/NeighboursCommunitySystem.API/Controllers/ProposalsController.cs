@@ -1,16 +1,15 @@
 ﻿namespace NeighboursCommunitySystem.API.Controllers
 {
-    using System;
+    using System.Linq;
     using System.Web.Http;
+    using AutoMapper.QueryableExtensions;
     using Breeze.ContextProvider.EF6;
     using Breeze.WebApi2;
     using Data.DbContexts;
     using Microsoft.AspNet.Identity;
     using Models;
-    using AutoMapper.QueryableExtensions;
     using Server.DataTransferModels.Proposals;
     using Services.Data.Contracts;
-    using System.Linq;
 
     [BreezeController]
     //[EnableCors(origins: "http://neighbourscommunityclient.azurewebsites.net, http://localhost:53074", headers: "*", methods: "*")]
@@ -73,21 +72,10 @@
         [Authorize]
         public IHttpActionResult VoteUp(int id)
         {
-            try
-            {
 
-           
             var userId = this.User.Identity.GetUserId();
-            this.proposalService.VoteUp(id, userId);
-            
-            }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
-            {
-                var e = ex;
-                Console.WriteLine(ex);
-
-            }
-            return this.Ok(id);
+            var action = this.proposalService.VoteUp(id, userId);
+            return this.Ok(action);
         }
 
         [HttpPost]
@@ -95,8 +83,8 @@
         public IHttpActionResult VoteDown(int id)
         {
             var userId = this.User.Identity.GetUserId();
-            this.proposalService.VoteDown(id, userId);
-            return this.Ok(id);
+            var action = this.proposalService.VoteDown(id, userId);
+            return this.Ok(action);
         }
 
         [HttpPost]
