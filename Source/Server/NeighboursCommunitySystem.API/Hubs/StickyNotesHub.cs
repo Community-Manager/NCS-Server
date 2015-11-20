@@ -7,10 +7,16 @@
     [HubName("stickyNotesHub")]
     public class StickyNotesHub : Hub
     {
-        public void VoteUpProposal()
+        public void VoteProposal()
         {
-            var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
-            context.Clients.All.refresh();
+            //var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
+            this.Clients.Others.refresh();
+        }
+
+        public void AddProposal()
+        {
+            //var context = GlobalHost.ConnectionManager.GetHubContext<StickyNotesHub>();
+            this.Clients.Others.refreshAndRedirect();
         }
 
         public override Task OnConnected()
